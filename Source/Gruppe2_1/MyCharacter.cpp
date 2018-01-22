@@ -84,6 +84,10 @@ void AMyCharacter::MoveRight(float Value) {
 	}
 }
 
+void AMyCharacter::MyJump() {
+	Jump();
+}
+
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -92,6 +96,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	//Set up key bindings
 	PlayerInputComponent->BindAxis("MoveForward", this , &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::MyJump);
 //	PlayerInputComponent->BindAxis(TurnBinding);
 
 	//const FName AMyCharacter::MoveForwardBinding("MoveForward");
