@@ -14,6 +14,14 @@ class GRUPPE2_1_API AMyCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
+	static const FName MoveForwardBinding;
+	static const FName MoveRightBinding;
+	static const FName FireForwardBinding;
+	static const FName FireRightBinding;
+
+	/* The speed our ship moves around the level */
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		float MoveSpeed;
 
 protected:
 	// Called when the game starts or when spawned
