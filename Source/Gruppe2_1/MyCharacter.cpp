@@ -47,6 +47,7 @@ void AMyCharacter::BeginPlay()
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
+	//UE_LOG(LogTemp, Warning, TEXT("TEST"));
 	//const float ForwardValue = GetInputAxisKeyValue(MoveForwardBinding);
 	//const float RightValue = GetInputAxisKeyValue(MoveRightBinding);
 
