@@ -74,15 +74,17 @@ void AMyCharacter::Tick(float DeltaTime)
 
 void AMyCharacter::MoveForward(float Value) {
 	if (Value != 0.f) {
-		
+	//	FVector Forward = GetActorForwardVector();
+		FVector Forward = FVector(-1.f, 1.f, 0.f);
 	//	AddMovementInput(CameraComponent->GetForwardVector)
-		AddMovementInput(CameraComponent->GetForwardVector(), Value);
+		AddMovementInput(Forward, Value);
 	}
 }
 
 void AMyCharacter::MoveRight(float Value) {
 	if (Value != 0.f) {
-		AddMovementInput(CameraComponent->GetRightVector(), Value);
+		FVector Right = FVector(-1.f, -1.f, 0.f);
+		AddMovementInput(Right, Value);
 	}
 }
 
