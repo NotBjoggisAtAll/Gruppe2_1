@@ -31,16 +31,16 @@ public:
 
 	// Weapon
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	FVector GunOffset = FVector(90.f, 0.f, 0.f);
+	FVector GunOffset;
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	float FireRate = 0.1f;
+	float FireRate;
 	
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	bool bCanFire = true;
+	bool bCanFire;
 
-	UPROPERTY(EditAnywhere, Category = "Spawning")
-	TSubclassOf<AProjectile> BulletBlueprint;
+	//UPROPERTY(EditAnywhere, Category = "Spawning")
+	//TSubclassOf<AProjectile> BulletBlueprint;
 
 protected:
 	// Called when the game starts or when spawned
@@ -51,8 +51,8 @@ protected:
 
 	void MyJump();
 
-	UFUNCTION(BlueprintCallable)
-	void Shoot();
+	/*UFUNCTION(BlueprintCallable)
+	void Shoot();*/
 
 public:	
 	// Called every frame

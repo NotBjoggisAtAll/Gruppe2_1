@@ -10,7 +10,7 @@
 // Sets default values
 AProjectile::AProjectile()
 {
- 	
+ 	// TODO Rewrite the constructor. Let the Blueprint setup mesh and projectile movement!!!
 	// Static reference to the mesh to use for the projectile
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> ProjectileMeshAsset(TEXT("/Game/TwinStick/Meshes/TwinStickProjectile.TwinStickProjectile"));
 

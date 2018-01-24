@@ -76,17 +76,17 @@ void AMyCharacter::MyJump() {
 	Jump();
 }
 
-void AMyCharacter::Shoot()
-{
-//	if (bCanFire = true) {
-		UWorld* const World = GetWorld();
-		if (World) {
-			FVector Location = GetActorLocation();
-			World->SpawnActor<AProjectile>(BulletBlueprint, Location + GunOffset, GetActorRotation());
-		}
-	//	AProjectile* Bullet = World->SpawnActor<AProjectile>(GetActorLocation(), GetActorRotation());
-	//}
-}
+//void AMyCharacter::Shoot()
+//{
+////	if (bCanFire = true) {
+//		UWorld* const World = GetWorld();
+//		if (World) {
+//			FVector Location = GetActorLocation();
+//			World->SpawnActor<AProjectile>(BulletBlueprint, Location + GunOffset, GetActorRotation());
+//		}
+//	//	AProjectile* Bullet = World->SpawnActor<AProjectile>(GetActorLocation(), GetActorRotation());
+//	//}
+//}
 
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -97,7 +97,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("MoveForward", this , &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::MyJump);
-	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMyCharacter::Shoot);
+	//PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMyCharacter::Shoot);
 //	PlayerInputComponent->BindAxis(TurnBinding);
 
 	//const FName AMyCharacter::MoveForwardBinding("MoveForward");
