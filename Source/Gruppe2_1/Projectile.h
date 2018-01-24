@@ -26,6 +26,9 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
 	/** Function to handle the projectile hitting something */
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -35,6 +38,14 @@ public:
 	/** Returns ProjectileMovement subobject **/
 	FORCEINLINE UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 
-	
+private:
+
+	UPROPERTY(EditAnywhere)
+		float Speed = 400.f;
+
+	UPROPERTY(EditAnywhere)
+		float TimeBeforeDestroy = 5.f;
+
+	float TimeLived{ 0 };
 	
 };

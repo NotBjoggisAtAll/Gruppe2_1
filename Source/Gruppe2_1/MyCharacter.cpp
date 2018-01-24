@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Projectile.h"
 
 //const FName AMyCharacter::MoveForwardBinding("MoveForward");
 //const FName AMyCharacter::MoveRightBinding("MoveRight");
@@ -35,6 +36,13 @@ AMyCharacter::AMyCharacter()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
+
+	// Movement
+	MoveSpeed = 1000.0f;
+	// Weapon
+	GunOffset = FVector(90.f, 0.f, 0.f);
+	FireRate = 0.1f;
+	bCanFire = true;
 }
 
 // Called when the game starts or when spawned
@@ -47,36 +55,12 @@ void AMyCharacter::BeginPlay()
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
-	//const float ForwardValue = GetInputAxisKeyValue(MoveForwardBinding);
-	//const float RightValue = GetInputAxisKeyValue(MoveRightBinding);
 
-	//Clamp movement
-	//const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.f);
-
-	////Calculate movement
-	//const FVector Movement = MoveDirection * MoveSpeed * DeltaTime;
-
-
-	//if (Movement.SizeSquared() > 0.0f)
-	//{
-	//	const FRotator NewRotation = Movement.Rotation();
-	//	FHitResult Hit(1.f);
-	//	RootComponent->MoveComponent(Movement, NewRotation, true, &Hit);
-
-	//	if (Hit.IsValidBlockingHit())
-	//	{
-	//		const FVector Normal2D = Hit.Normal.GetSafeNormal2D();
-	//		const FVector Deflection = FVector::VectorPlaneProject(Movement, Normal2D) * (1.f - Hit.Time);
-	//		RootComponent->MoveComponent(Deflection, NewRotation, true);
-	//	}
-	//}
 }
 
 void AMyCharacter::MoveForward(float Value) {
 	if (Value != 0.f) {
-	//	FVector Forward = GetActorForwardVector();
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
-	//	AddMovementInput(CameraComponent->GetForwardVector)
 		AddMovementInput(Forward, Value);
 	}
 }
@@ -92,6 +76,18 @@ void AMyCharacter::MyJump() {
 	Jump();
 }
 
+void AMyCharacter::Shoot()
+{
+//	if (bCanFire = true) {
+		UWorld* const World = GetWorld();
+		if (World) {
+			FVector Location = GetActorLocation();
+			World->SpawnActor<AProjectile>(BulletBlueprint, Location + GunOffset, GetActorRotation());
+		}
+	//	AProjectile* Bullet = World->SpawnActor<AProjectile>(GetActorLocation(), GetActorRotation());
+	//}
+}
+
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -101,6 +97,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("MoveForward", this , &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::MyJump);
+	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMyCharacter::Shoot);
 //	PlayerInputComponent->BindAxis(TurnBinding);
 
 	//const FName AMyCharacter::MoveForwardBinding("MoveForward");

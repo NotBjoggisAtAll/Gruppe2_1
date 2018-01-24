@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+
+class AProjectile;
+
 UCLASS()
 class GRUPPE2_1_API AMyCharacter : public ACharacter
 {
@@ -22,15 +25,22 @@ public:
 	AMyCharacter();
 
 
+	// Movement
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	float MoveSpeed;
 
-	// Static names for axis bindings
-	/*static const FName MoveForwardBinding;
-	static const FName MoveRightBinding;
-	static const FName TurnBinding;*/
-	//static const FName FireRightBinding;
+	// Weapon
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	FVector GunOffset = FVector(90.f, 0.f, 0.f);
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-		float MoveSpeed;
+	float FireRate = 0.1f;
+	
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	bool bCanFire = true;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TSubclassOf<AProjectile> BulletBlueprint;
 
 protected:
 	// Called when the game starts or when spawned
@@ -40,6 +50,9 @@ protected:
 	void MoveRight(float Value);
 
 	void MyJump();
+
+	UFUNCTION(BlueprintCallable)
+	void Shoot();
 
 public:	
 	// Called every frame
