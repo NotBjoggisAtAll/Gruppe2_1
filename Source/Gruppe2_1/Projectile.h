@@ -26,6 +26,8 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
+	void Tick(float DeltaTime) override;
+
 	/** Function to handle the projectile hitting something */
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
