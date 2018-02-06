@@ -4,6 +4,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Engine/World.h"
+#include "Projectile.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -18,8 +20,6 @@ AMyCharacter::AMyCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.f);
-
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
@@ -27,14 +27,19 @@ AMyCharacter::AMyCharacter()
 	// Camera boom
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 500.f;
+	CameraBoom->TargetArmLength = 1000.f;
 	CameraBoom->RelativeRotation = FRotator(-45.f, 130.f, 0.f);
 	CameraBoom->bUsePawnControlRotation = false;
+	CameraBoom->bInheritYaw = false;
 
 	// Create Camera
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
+
+	GunOffset = FVector(10.f, 0.f, 0.f);
+	FireRate = 0.2f;
+	bCanFire = true;
 }
 
 // Called when the game starts or when spawned
@@ -47,37 +52,25 @@ void AMyCharacter::BeginPlay()
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("TEST"));
-	//const float ForwardValue = GetInputAxisKeyValue(MoveForwardBinding);
-	//const float RightValue = GetInputAxisKeyValue(MoveRightBinding);
+	if (isShooting == true) {
+		if (bCanFire == true) {
+			const FRotator FireRotation = FRotator(1.f, 0.f, 0.f);
 
-	//Clamp movement
-	//const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.f);
+			const FVector SpawnLocation = this->GetActorForwardVector() + GunOffset; //TODO Spørre om hvorfor dette ikke fungerer
 
-	////Calculate movement
-	//const FVector Movement = MoveDirection * MoveSpeed * DeltaTime;
-
-
-	//if (Movement.SizeSquared() > 0.0f)
-	//{
-	//	const FRotator NewRotation = Movement.Rotation();
-	//	FHitResult Hit(1.f);
-	//	RootComponent->MoveComponent(Movement, NewRotation, true, &Hit);
-
-	//	if (Hit.IsValidBlockingHit())
-	//	{
-	//		const FVector Normal2D = Hit.Normal.GetSafeNormal2D();
-	//		const FVector Deflection = FVector::VectorPlaneProject(Movement, Normal2D) * (1.f - Hit.Time);
-	//		RootComponent->MoveComponent(Deflection, NewRotation, true);
-	//	}
-	//}
+			UWorld* const World = GetWorld();
+			if (World != NULL) {
+				World->SpawnActor<AProjectile>(Projectile_BP, SpawnLocation, FireRotation);
+			}
+			bCanFire = false;
+			World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
+		}
+	}
 }
 
 void AMyCharacter::MoveForward(float Value) {
 	if (Value != 0.f) {
-	//	FVector Forward = GetActorForwardVector();
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
-	//	AddMovementInput(CameraComponent->GetForwardVector)
 		AddMovementInput(Forward, Value);
 	}
 }
@@ -93,6 +86,27 @@ void AMyCharacter::MyJump() {
 	Jump();
 }
 
+void AMyCharacter::StartShooting()
+{
+	isShooting = true;
+	if (isShooting == true) {
+
+
+		UE_LOG(LogTemp, Warning, TEXT("Shooting!"));
+	}
+}
+
+void AMyCharacter::StopShooting()
+{
+	isShooting = false;
+	UE_LOG(LogTemp, Warning, TEXT("Stopped shooting!"));
+}
+
+void AMyCharacter::ShotTimerExpired()
+{
+	bCanFire = true;
+}
+
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -102,6 +116,8 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("MoveForward", this , &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::MyJump);
+	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMyCharacter::StartShooting);
+	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMyCharacter::StopShooting);
 //	PlayerInputComponent->BindAxis(TurnBinding);
 
 	//const FName AMyCharacter::MoveForwardBinding("MoveForward");

@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+class AProjectile;
+
 UCLASS()
 class GRUPPE2_1_API AMyCharacter : public ACharacter
 {
@@ -17,31 +19,49 @@ class GRUPPE2_1_API AMyCharacter : public ACharacter
 	UPROPERTY(Category = Camera, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<AProjectile> Projectile_BP;
+
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
 
+	/** Offset from the ships location to spawn projectiles */
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		FVector GunOffset;
 
+	/* How fast the weapon will fire */
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		float FireRate;
 
-	// Static names for axis bindings
-	/*static const FName MoveForwardBinding;
-	static const FName MoveRightBinding;
-	static const FName TurnBinding;*/
-	//static const FName FireRightBinding;
+	/* Checks if the weapon can fire*/
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		bool bCanFire;
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-		float MoveSpeed;
+	float MoveSpeed;
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
+	private:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
 	void MyJump();
 
+	bool isShooting;
+
+
+	void StartShooting();
+	void StopShooting();
+
+	void ShotTimerExpired();
+
+	/** Handle for efficient management of ShotTimerExpired timer */
+	FTimerHandle TimerHandle_ShotTimerExpired;
 public:	
+
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
