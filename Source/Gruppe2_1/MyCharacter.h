@@ -51,6 +51,7 @@ public:
 
 
 	void StartShooting();
+	void Shooting();
 	void StopShooting();
 
 	void ShotTimerExpired();

@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
+#include "TimerManager.h"
 #include "Projectile.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -37,7 +38,7 @@ AMyCharacter::AMyCharacter()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
-	GunOffset = FVector(10.f, 0.f, 0.f);
+	GunOffset = FVector(50.f, 0.f, 0.f);
 	FireRate = 0.2f;
 	bCanFire = true;
 }
@@ -53,18 +54,7 @@ void AMyCharacter::BeginPlay()
 void AMyCharacter::Tick(float DeltaTime)
 {
 	if (isShooting == true) {
-		if (bCanFire == true) {
-			const FRotator FireRotation = FRotator(1.f, 0.f, 0.f);
-
-			const FVector SpawnLocation = this->GetActorForwardVector() + GunOffset; //TODO Spørre om hvorfor dette ikke fungerer
-
-			UWorld* const World = GetWorld();
-			if (World != NULL) {
-				World->SpawnActor<AProjectile>(Projectile_BP, SpawnLocation, FireRotation);
-			}
-			bCanFire = false;
-			World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
-		}
+		Shooting();
 	}
 }
 
@@ -93,6 +83,22 @@ void AMyCharacter::StartShooting()
 
 
 		UE_LOG(LogTemp, Warning, TEXT("Shooting!"));
+	}
+}
+
+void AMyCharacter::Shooting()
+{
+	if (bCanFire == true) {
+		const FVector FireDirection = GetActorForwardVector();
+		const FRotator FireRotation = FireDirection.Rotation();
+		const FVector SpawnLocation = GetActorLocation() + FireRotation.RotateVector(GunOffset); //TODO Spørre om hvorfor dette ikke fungerer
+
+		UWorld* const World = GetWorld();
+		if (World != NULL) {
+			World->SpawnActor<AProjectile>(Projectile_BP, SpawnLocation, FireRotation);
+		}
+		bCanFire = false;
+		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
 	}
 }
 
