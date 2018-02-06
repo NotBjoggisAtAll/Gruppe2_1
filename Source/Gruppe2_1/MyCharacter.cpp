@@ -38,7 +38,7 @@ AMyCharacter::AMyCharacter()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
-	GunOffset = FVector(50.f, 0.f, 0.f);
+	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 0.2f;
 	bCanFire = true;
 }
