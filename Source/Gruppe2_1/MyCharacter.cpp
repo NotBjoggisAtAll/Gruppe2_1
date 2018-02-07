@@ -43,6 +43,7 @@ AMyCharacter::AMyCharacter()
 	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 0.2f;
 	bCanFire = true;
+	hasLanded = true;
 }
 
 // Called when the game starts or when spawned
@@ -78,16 +79,21 @@ void AMyCharacter::MoveRight(float Value) {
 
 // Runs when you press the Jump button
 void AMyCharacter::MyJump() {
+	if (hasLanded == true) {
 	UWorld* const World = GetWorld();
 	FVector SpawnLocation = GetActorLocation();
 	Jump();
-	UGameplayStatics::PlaySoundAtLocation(World,JumpSound, SpawnLocation);
+	UGameplayStatics::PlaySoundAtLocation(World, JumpSound, SpawnLocation);
+	hasLanded = false;
+	}
 }
 
 void AMyCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
-	UE_LOG(LogTemp, Warning, TEXT("JUMP I JUMP"));
+	UWorld* World = GetWorld();
+	UGameplayStatics::PlaySoundAtLocation(World, LandSound, GetActorLocation());
+	hasLanded = true;
 }
 // Runs when you press the Shoot button
 void AMyCharacter::StartShooting()
@@ -106,7 +112,7 @@ void AMyCharacter::Shooting()
 		UWorld* const World = GetWorld();
 		if (World != NULL) {
 			World->SpawnActor<AProjectile>(Projectile_BP, SpawnLocation, FireRotation);
-			UGameplayStatics::PlaySoundAtLocation(World, FireShot, SpawnLocation);
+			UGameplayStatics::PlaySoundAtLocation(World, FireShot, GetActorLocation());
 		}
 		bCanFire = false;
 		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);

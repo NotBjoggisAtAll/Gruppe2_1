@@ -33,6 +33,9 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		USoundBase* JumpSound;
 
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		USoundBase* LandSound;
+
 	/** Offset from the ships location to spawn projectiles */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		FVector GunOffset;
@@ -45,20 +48,18 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		bool bCanFire;
 
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	float MoveSpeed;
-
-	private:
+private:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+	
+	
+	bool hasLanded;
 
 	void MyJump();
-
-	 virtual void Landed(const FHitResult& Hit) override;
+	virtual void Landed(const FHitResult& Hit) override;
 
 
 	bool isShooting;
-
 
 	void StartShooting();
 	void Shooting();
