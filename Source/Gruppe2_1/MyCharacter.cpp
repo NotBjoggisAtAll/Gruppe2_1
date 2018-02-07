@@ -83,6 +83,12 @@ void AMyCharacter::MyJump() {
 	Jump();
 	UGameplayStatics::PlaySoundAtLocation(World,JumpSound, SpawnLocation);
 }
+
+void AMyCharacter::Landed(const FHitResult& Hit)
+{
+	Super::Landed(Hit);
+	UE_LOG(LogTemp, Warning, TEXT("JUMP I JUMP"));
+}
 // Runs when you press the Shoot button
 void AMyCharacter::StartShooting()
 {
