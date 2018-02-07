@@ -79,6 +79,12 @@ void AMyCharacter::MoveRight(float Value) {
 void AMyCharacter::MyJump() {
 	Jump();
 }
+
+void AMyCharacter::Landed(const FHitResult& Hit)
+{
+	Super::Landed(Hit);
+	UE_LOG(LogTemp, Warning, TEXT("JUMP I JUMP"));
+}
 // Runs when you press the Shoot button
 void AMyCharacter::StartShooting()
 {

@@ -47,6 +47,9 @@ public:
 
 	void MyJump();
 
+	 virtual void Landed(const FHitResult& Hit) override;
+
+
 	bool isShooting;
 
 
