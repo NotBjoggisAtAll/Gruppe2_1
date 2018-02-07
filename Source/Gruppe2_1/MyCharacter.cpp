@@ -38,6 +38,7 @@ AMyCharacter::AMyCharacter()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
+	// Sets default values to variables
 	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 0.2f;
 	bCanFire = true;
@@ -58,6 +59,7 @@ void AMyCharacter::Tick(float DeltaTime)
 	}
 }
 
+// Runs when you use press the movement buttons
 void AMyCharacter::MoveForward(float Value) {
 	if (Value != 0.f) {
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
@@ -65,6 +67,7 @@ void AMyCharacter::MoveForward(float Value) {
 	}
 }
 
+// Runs when you use press the movement buttons
 void AMyCharacter::MoveRight(float Value) {
 	if (Value != 0.f) {
 		FVector Right = FVector(-1.f, -1.f, 0.f);
@@ -72,20 +75,17 @@ void AMyCharacter::MoveRight(float Value) {
 	}
 }
 
+// Runs when you press the Jump button
 void AMyCharacter::MyJump() {
 	Jump();
 }
-
+// Runs when you press the Shoot button
 void AMyCharacter::StartShooting()
 {
 	isShooting = true;
-	if (isShooting == true) {
-
-
-		UE_LOG(LogTemp, Warning, TEXT("Shooting!"));
-	}
 }
 
+// Runs while you hold the Shoot button
 void AMyCharacter::Shooting()
 {
 	if (bCanFire == true) {
@@ -101,11 +101,10 @@ void AMyCharacter::Shooting()
 		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
 	}
 }
-
+// Runs when you release the Shoot button
 void AMyCharacter::StopShooting()
 {
 	isShooting = false;
-	UE_LOG(LogTemp, Warning, TEXT("Stopped shooting!"));
 }
 
 void AMyCharacter::ShotTimerExpired()
@@ -124,10 +123,6 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::MyJump);
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMyCharacter::StartShooting);
 	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMyCharacter::StopShooting);
-//	PlayerInputComponent->BindAxis(TurnBinding);
 
-	//const FName AMyCharacter::MoveForwardBinding("MoveForward");
-	//const FName AMyCharacter::MoveRightBinding("MoveRight");
-	//const FName AMyCharacter::TurnBinding("Turn");
 }
 
