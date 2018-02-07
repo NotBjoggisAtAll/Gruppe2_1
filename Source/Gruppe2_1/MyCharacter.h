@@ -7,6 +7,7 @@
 #include "MyCharacter.generated.h"
 
 class AProjectile;
+class USoundBase;
 
 UCLASS()
 class GRUPPE2_1_API AMyCharacter : public ACharacter
@@ -25,6 +26,12 @@ class GRUPPE2_1_API AMyCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
+
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		USoundBase* FireShot;
+
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		USoundBase* JumpSound;
 
 	/** Offset from the ships location to spawn projectiles */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)

@@ -10,6 +10,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 //const FName AMyCharacter::MoveForwardBinding("MoveForward");
 //const FName AMyCharacter::MoveRightBinding("MoveRight");
@@ -77,7 +78,10 @@ void AMyCharacter::MoveRight(float Value) {
 
 // Runs when you press the Jump button
 void AMyCharacter::MyJump() {
+	UWorld* const World = GetWorld();
+	FVector SpawnLocation = GetActorLocation();
 	Jump();
+	UGameplayStatics::PlaySoundAtLocation(World,JumpSound, SpawnLocation);
 }
 // Runs when you press the Shoot button
 void AMyCharacter::StartShooting()
@@ -96,6 +100,7 @@ void AMyCharacter::Shooting()
 		UWorld* const World = GetWorld();
 		if (World != NULL) {
 			World->SpawnActor<AProjectile>(Projectile_BP, SpawnLocation, FireRotation);
+			UGameplayStatics::PlaySoundAtLocation(World, FireShot, SpawnLocation);
 		}
 		bCanFire = false;
 		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
