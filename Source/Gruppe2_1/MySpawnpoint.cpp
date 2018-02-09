@@ -4,13 +4,17 @@
 #include "MyEnemy.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "Gruppe2_1GameModeBase.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 AMySpawnpoint::AMySpawnpoint()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	bCanSpawn = true;
+	bSpawnTimerExpired = true;
 	SpawnRate = 4.f;
+
+//	MyGameMode = UGameplayStatics::GetGameMode;
 }
 void AMySpawnpoint::Tick(float DeltaTime)
 {
@@ -19,23 +23,25 @@ void AMySpawnpoint::Tick(float DeltaTime)
 }
 
 void AMySpawnpoint::SpawnEnemy() {
-	if (bCanSpawn == true) {
-		const FRotator SpawnRotation = FRotator(0.f, 180.f, 0.f);
+	if (bSpawnTimerExpired == true) {
+		//if (MyGameMode) {
+			const FRotator SpawnRotation = FRotator(0.f, 180.f, 0.f);
 
-		const FVector SpawnLocation = GetActorLocation();
+			const FVector SpawnLocation = GetActorLocation();
 
-		UWorld* const World = GetWorld();
-		if (World != NULL) {
-			if (Enemy_BP != nullptr) {
-				World->SpawnActor<AMyEnemy>(Enemy_BP, SpawnLocation, SpawnRotation);
+			UWorld* const World = GetWorld();
+			if (World != NULL) {
+				if (Enemy_BP != nullptr) {
+					World->SpawnActor<AMyEnemy>(Enemy_BP, SpawnLocation, SpawnRotation);
+				}
 			}
+			bSpawnTimerExpired = false;
+			World->GetTimerManager().SetTimer(TimerHandle_SpawnTimerExpired, this, &AMySpawnpoint::SpawnTimerExpired, SpawnRate);
 		}
-		bCanSpawn = false;
-		World->GetTimerManager().SetTimer(TimerHandle_SpawnTimerExpired, this, &AMySpawnpoint::SpawnTimerExpired, SpawnRate);
-	}
+//	}
 }
 
 void AMySpawnpoint::SpawnTimerExpired()
 {
-	bCanSpawn = true;
+	bSpawnTimerExpired = true;
 }
