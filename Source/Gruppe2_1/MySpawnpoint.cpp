@@ -4,44 +4,40 @@
 #include "MyEnemy.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
-#include "Gruppe2_1GameModeBase.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 AMySpawnpoint::AMySpawnpoint()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	//PrimaryActorTick.bCanEverTick = true; //Tick trengs ikke da spawning nå styres av MyGameMode
 
-	bSpawnTimerExpired = true;
-	SpawnRate = 4.f;
+	//bSpawnTimerExpired = true; 		//Timer flyttet til MyGameMode_BP
+	//SpawnRate = 4.f; 		//Timer flyttet til MyGameMode_BP
 
-//	MyGameMode = UGameplayStatics::GetGameMode;
 }
-void AMySpawnpoint::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	SpawnEnemy();
-}
+//void AMySpawnpoint::Tick(float DeltaTime)
+//{
+//	Super::Tick(DeltaTime);
+//	//SpawnEnemy(); // Spawning styres nå av MyGameMode_BP
+//}
 
 void AMySpawnpoint::SpawnEnemy() {
-	if (bSpawnTimerExpired == true) {
-		//if (MyGameMode) {
-			const FRotator SpawnRotation = FRotator(0.f, 180.f, 0.f);
+	//if (bSpawnTimerExpired == true) {
+		const FRotator SpawnRotation = FRotator(0.f, 180.f, 0.f);
 
-			const FVector SpawnLocation = GetActorLocation();
+		const FVector SpawnLocation = GetActorLocation();
 
-			UWorld* const World = GetWorld();
-			if (World != NULL) {
-				if (Enemy_BP != nullptr) {
-					World->SpawnActor<AMyEnemy>(Enemy_BP, SpawnLocation, SpawnRotation);
-				}
+		UWorld* const World = GetWorld();
+		if (World != NULL) {
+			if (Enemy_BP != nullptr) {
+				World->SpawnActor<AMyEnemy>(Enemy_BP, SpawnLocation, SpawnRotation);
 			}
-			bSpawnTimerExpired = false;
-			World->GetTimerManager().SetTimer(TimerHandle_SpawnTimerExpired, this, &AMySpawnpoint::SpawnTimerExpired, SpawnRate);
 		}
-//	}
+		//Timer flyttet til MyGameMode_BP
+	 // bSpawnTimerExpired = false;
+	//	World->GetTimerManager().SetTimer(TimerHandle_SpawnTimerExpired, this, &AMySpawnpoint::SpawnTimerExpired, SpawnRate);
+	//}
 }
-
-void AMySpawnpoint::SpawnTimerExpired()
-{
-	bSpawnTimerExpired = true;
-}
+//Timer flyttet til MyGameMode_BP
+//void AMySpawnpoint::SpawnTimerExpired()
+//{
+//	bSpawnTimerExpired = true;
+//}

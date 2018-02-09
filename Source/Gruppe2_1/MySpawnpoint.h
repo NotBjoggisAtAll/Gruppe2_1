@@ -10,7 +10,6 @@
 *
 */
 class AMyEnemy;
-class AGruppe2_1_GameModeBase;
 
 UCLASS()
 class GRUPPE2_1_API AMySpawnpoint : public ATargetPoint
@@ -20,31 +19,27 @@ class GRUPPE2_1_API AMySpawnpoint : public ATargetPoint
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AMyEnemy> Enemy_BP;
 
-	UPROPERTY(EditAnywhere)
-	bool bCanSpawn;
-
-	//AGruppe2_1_GameModeBase*  MyGameMode;
-	
-
 public:
 
 	AMySpawnpoint();
 
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	float SpawnRate;
+	//UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	//float SpawnRate;
 
-protected:
-
-	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(Category = Gameplay, BlueprintReadOnly)
-	bool bSpawnTimerExpired;
-
-private:
-
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	void SpawnEnemy();
-	void SpawnTimerExpired();
 
-	/** Handle for efficient management of ShotTimerExpired timer */
-	FTimerHandle TimerHandle_SpawnTimerExpired;
+//protected:
+//
+//	virtual void Tick(float DeltaTime) override;
+//
+//	UPROPERTY(Category = Gameplay, BlueprintReadOnly)
+//	bool bSpawnTimerExpired;
+//
+//private:
+//
+//	void SpawnTimerExpired();
+//
+//	/** Handle for efficient management of ShotTimerExpired timer */
+//	FTimerHandle TimerHandle_SpawnTimerExpired;
 };

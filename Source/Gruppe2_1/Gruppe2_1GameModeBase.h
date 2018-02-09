@@ -6,19 +6,18 @@
 #include "GameFramework/GameModeBase.h"
 #include "Gruppe2_1GameModeBase.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class GRUPPE2_1_API AGruppe2_1GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+
 	
+
 public:
 
 	AGruppe2_1GameModeBase();
 
-	bool bCanSpawn;
-	
+	bool bCanSpawnEnemies;
+	virtual void Tick(float DeltaTime) override;
 	
 };
