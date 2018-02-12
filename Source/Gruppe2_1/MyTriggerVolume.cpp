@@ -3,39 +3,30 @@
 #include "MyTriggerVolume.h"
 // include draw debug helpers header file
 #include "DrawDebugHelpers.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
+#include "MyCharacter.h"
 AMyTriggerVolume::AMyTriggerVolume()
 {
 	OnActorBeginOverlap.AddDynamic(this, &AMyTriggerVolume::OnOverlapBegin);
-	OnActorEndOverlap.AddDynamic(this, &AMyTriggerVolume::OnOverlapEnd);
 }
 
 void AMyTriggerVolume::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
+	//Brukes kun til debugging, for å vise hvor triggerboxen er
 	DrawDebugBox(GetWorld(), GetActorLocation(), GetActorScale() * 100, FColor::Cyan, true, -1, 0, 5);
 }
 
 void AMyTriggerVolume::OnOverlapBegin(AActor * OverlappedActor, AActor * OtherActor)
 {
 	if (OtherActor && (OtherActor != this)) {
-
-		//if (OtherActor == GetWorld()->Ge) {
-		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin!"));
-
-		//}
-			// hvis other actor sin klasse er player klasse
-
-		/// Going to add OpenLevel function later
-
-	}
-}
-
-void AMyTriggerVolume::OnOverlapEnd(AActor * OverlappedActor, AActor * OtherActor)
-{
-	if (OtherActor && (OtherActor != this)) {
-		UE_LOG(LogTemp, Warning, TEXT("Overlap End!"));
+		auto Player = Cast<AMyCharacter>(OtherActor);
+		if (Player)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Overlap Begin!"));
+			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/Level_2"), TRAVEL_Absolute);
+		}
 	}
 }
