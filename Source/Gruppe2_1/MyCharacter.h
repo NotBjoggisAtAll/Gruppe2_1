@@ -27,14 +27,16 @@ public:
 	// Sets default values for this character's properties
 	AMyCharacter();
 
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
 		USoundBase* FireShot;
 
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
 		USoundBase* JumpSound;
 
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
 		USoundBase* LandSound;
+
+
 
 	/** Offset from the ships location to spawn projectiles */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
@@ -48,7 +50,9 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		bool bCanFire;
 
-private:
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	int Health;
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	

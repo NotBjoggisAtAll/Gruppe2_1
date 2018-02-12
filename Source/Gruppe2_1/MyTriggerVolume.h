@@ -6,9 +6,7 @@
 #include "Engine/TriggerVolume.h"
 #include "MyTriggerVolume.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class GRUPPE2_1_API AMyTriggerVolume : public ATriggerVolume
 {
@@ -16,8 +14,6 @@ class GRUPPE2_1_API AMyTriggerVolume : public ATriggerVolume
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:
 
 	// constructor sets default values for this actor's properties
 	AMyTriggerVolume();

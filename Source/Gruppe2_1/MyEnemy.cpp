@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MyEnemy.h"
-
+#include "Gruppe2_1GameModeBase.h"
 
 // Sets default values
 AMyEnemy::AMyEnemy()
@@ -30,5 +30,22 @@ void AMyEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+void AMyEnemy::Destroyed() {
+
+	Super::Destroyed();
+
+	// Get World
+	UWorld* World = GetWorld();
+
+	if (World)
+	{
+		// Game mode 
+		AGruppe2_1GameModeBase* MyGameMode = Cast<AGruppe2_1GameModeBase>(World->GetAuthGameMode());
+		if (MyGameMode)
+		{
+			MyGameMode->NumberOfEnemiesKilled++;
+		}
+	}
 }
 

@@ -8,13 +8,14 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase() {
 	PrimaryActorTick.bCanEverTick = true;
 
 	bCanSpawnEnemies = true;
-
+	NumberOfEnemiesKilled = 0;
 
 }
 
 void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 	//UE_LOG(LogTemp, Warning, TEXT("TEST"));
 }
 

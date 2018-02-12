@@ -21,8 +21,15 @@ void AMyTriggerVolume::BeginPlay()
 void AMyTriggerVolume::OnOverlapBegin(AActor * OverlappedActor, AActor * OtherActor)
 {
 	if (OtherActor && (OtherActor != this)) {
+
+		//if (OtherActor == GetWorld()->Ge) {
 		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin!"));
+
+		//}
+			// hvis other actor sin klasse er player klasse
+
 		/// Going to add OpenLevel function later
+
 	}
 }
 
