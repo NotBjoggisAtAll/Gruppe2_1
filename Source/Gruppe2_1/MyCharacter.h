@@ -50,8 +50,13 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		bool bCanFire;
 
+	/* Checks if the weapon can fire*/
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		bool bIsWalking;
+
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 	int Health;
+
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);

@@ -44,6 +44,7 @@ AMyCharacter::AMyCharacter()
 	FireRate = 0.2f;
 	bCanFire = true;
 	hasLanded = true;
+	bIsWalking = false;
 }
 
 // Called when the game starts or when spawned
@@ -64,17 +65,21 @@ void AMyCharacter::Tick(float DeltaTime)
 // Runs when you use press the movement buttons
 void AMyCharacter::MoveForward(float Value) {
 	if (Value != 0.f) {
+		bIsWalking = true;
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
 		AddMovementInput(Forward, Value);
 	}
+	bIsWalking = false;
 }
 
 // Runs when you use press the movement buttons
 void AMyCharacter::MoveRight(float Value) {
 	if (Value != 0.f) {
+		bIsWalking = true;
 		FVector Right = FVector(-1.f, -1.f, 0.f);
 		AddMovementInput(Right, Value);
 	}
+	bIsWalking = false;
 }
 
 // Runs when you press the Jump button
