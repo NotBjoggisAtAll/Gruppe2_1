@@ -37,6 +37,8 @@ public:
 	/** Returns ProjectileMovement subobject **/
 	FORCEINLINE UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 
-	
+private:
+
+	float Speed;
 	
 };

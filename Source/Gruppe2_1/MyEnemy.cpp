@@ -44,7 +44,7 @@ void AMyEnemy::Destroyed() {
 		AGruppe2_1GameModeBase* MyGameMode = Cast<AGruppe2_1GameModeBase>(World->GetAuthGameMode());
 		if (MyGameMode)
 		{
-			MyGameMode->NumberOfEnemiesKilled++;
+			MyGameMode->IncrementNumberOfEnemiesKilled();
 		}
 	}
 }
