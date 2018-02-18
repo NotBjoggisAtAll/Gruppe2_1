@@ -18,21 +18,21 @@ public:
 
 	AGruppe2_1GameModeBase();
 
-	UPROPERTY(BlueprintReadOnly, Category = "Player")
-
-
-
 	TArray<AMyEnemy*> Enemies;
 	TArray<AMySpawnpoint*> Spawnpoints;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Enemies")
+	bool bCanSpawnEnemies;
+	
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
+	int GetWaveNumber() { return WaveNumber; }
 
+	UFUNCTION(BlueprintCallable, Category = "Enemies")
+		int GetNumberOfEnemies() { return NumberOfEnemies; }
 
 	UFUNCTION(BlueprintCallable, Category = "Enemies")
 		int GetMaxNumberOfEnemies() { return MaxNumberOfEnemies; }
 
-	UFUNCTION(BlueprintCallable, Category = "Enemies")
-		int GetNumberOfEnemies() { return NumberOfEnemies; }
-	
 	UFUNCTION(BlueprintCallable, Category = "Enemies")
 	int GetNumberOfEnemiesKilled() { return NumberOfEnemiesKilled; }
 
@@ -44,12 +44,13 @@ public:
 
 	void SpawnEnemies();
 
+	void CheckIfNewWave();
+
 	void ResetCanSpawnEnemy();
 
 protected:
 
 	FTimerHandle TimerHandle_CanSpawnEnemy;
-	bool bCanSpawnEnemies;
 
 	int FindAllEnemies();
 	
@@ -58,8 +59,13 @@ protected:
 	int NumberOfSpawnpoints;
 	float SpawnRate;
 
-	int MaxNumberOfEnemies;
+	int counter;
+
+	int WaveNumber;
+	int MaxWave;
+
 	int NumberOfEnemies;
+	int MaxNumberOfEnemies;
 	int NumberOfEnemiesKilled;
 
 };

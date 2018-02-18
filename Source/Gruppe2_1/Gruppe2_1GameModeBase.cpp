@@ -15,6 +15,11 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase() {
 	bCanSpawnEnemies = true;
 	SpawnRate = 1.f;
 
+	WaveNumber = 1;
+	MaxWave = 3;
+
+	counter = 0; //TODO Finne på et bedre variabel navn
+
 	MaxNumberOfEnemies = 10;
 	NumberOfEnemies = 0;
 	NumberOfEnemiesKilled = 0;
@@ -56,25 +61,40 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	SpawnEnemies();
 	NumberOfEnemies = FindAllEnemies();
 
-	SpawnEnemies();
 	//UE_LOG(LogTemp, Warning, TEXT("TEST"));	
 }
 void AGruppe2_1GameModeBase::SpawnEnemies()
 {
 	if (bCanSpawnEnemies == true) {
-		if (NumberOfEnemies < MaxNumberOfEnemies) {
-			UWorld* World = GetWorld();
-			int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
-			Spawnpoints[random]->SpawnEnemy();
-			bCanSpawnEnemies = false;
-			World->GetTimerManager().SetTimer(TimerHandle_CanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
+		if (WaveNumber <= MaxWave) {
+			//	if (NumberOfEnemies < MaxNumberOfEnemies) {
+			if (counter < MaxNumberOfEnemies) {
+				UWorld* World = GetWorld();
+				int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
+				Spawnpoints[random]->SpawnEnemy();
+				bCanSpawnEnemies = false;
+				World->GetTimerManager().SetTimer(TimerHandle_CanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
+			}
 		}
 	}
+	CheckIfNewWave();
 }
+
+void AGruppe2_1GameModeBase::CheckIfNewWave()
+{
+	if ((counter == MaxNumberOfEnemies) && NumberOfEnemies == 0)
+	{
+		WaveNumber++;
+		counter = 0;
+	}
+}
+
 
 void AGruppe2_1GameModeBase::ResetCanSpawnEnemy() 
 {
 	bCanSpawnEnemies = true;
+	counter++;
 }
