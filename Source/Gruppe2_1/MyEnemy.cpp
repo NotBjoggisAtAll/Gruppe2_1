@@ -2,6 +2,7 @@
 
 #include "MyEnemy.h"
 #include "Gruppe2_1GameModeBase.h"
+#include "Projectile.h"
 
 // Sets default values
 AMyEnemy::AMyEnemy()
@@ -9,6 +10,11 @@ AMyEnemy::AMyEnemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+}
+
+void AMyEnemy::GetEnemyDeathLocation()
+{
+	
 }
 
 // Called when the game starts or when spawned

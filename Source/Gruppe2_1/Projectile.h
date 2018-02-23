@@ -25,8 +25,14 @@ class GRUPPE2_1_API AProjectile : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AProjectile();
-
 	void Tick(float DeltaTime) override;
+
+	UPROPERTY(BlueprintReadOnly)
+	FVector EnemyDeath;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool EnemyHit = false;
+
 
 	/** Function to handle the projectile hitting something */
 	UFUNCTION()

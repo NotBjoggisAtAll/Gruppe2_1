@@ -45,6 +45,7 @@ void AProjectile::Tick(float DeltaTime)
 	FRotator ProjectileRotation = FRotator(0.f, 0.f, xRotation);
 	AddActorLocalRotation(ProjectileRotation);
 }
+
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 
@@ -53,6 +54,8 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 	{
 		auto Enemy = Cast<AMyEnemy>(OtherActor);
 		if (Enemy) {
+			EnemyDeath = OtherActor->GetActorLocation();
+			EnemyHit = true;
 			Enemy->Destroy();
 		}
 	}
