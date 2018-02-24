@@ -12,11 +12,6 @@ AMyEnemy::AMyEnemy()
 
 }
 
-void AMyEnemy::GetEnemyDeathLocation()
-{
-	
-}
-
 // Called when the game starts or when spawned
 void AMyEnemy::BeginPlay()
 {
