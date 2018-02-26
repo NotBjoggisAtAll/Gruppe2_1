@@ -39,6 +39,8 @@ AMyCharacter::AMyCharacter()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
+	Health = 500;
+
 	// Sets default values to variables
 	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 0.2f;
