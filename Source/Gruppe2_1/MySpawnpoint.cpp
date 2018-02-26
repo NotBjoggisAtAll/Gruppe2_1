@@ -4,40 +4,41 @@
 #include "MyEnemy.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "Math/UnrealMathUtility.h"
 
 AMySpawnpoint::AMySpawnpoint()
 {
-	//PrimaryActorTick.bCanEverTick = true; //Tick trengs ikke da spawning nå styres av MyGameMode
-
-	//bSpawnTimerExpired = true; 		//Timer flyttet til MyGameMode_BP
-	//SpawnRate = 4.f; 		//Timer flyttet til MyGameMode_BP
-
+	PrimaryActorTick.bCanEverTick = false;
 }
-//void AMySpawnpoint::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//	//SpawnEnemy(); // Spawning styres nå av MyGameMode_BP
-//}
 
 void AMySpawnpoint::SpawnEnemy() {
-	//if (bSpawnTimerExpired == true) {
-		const FRotator SpawnRotation = FRotator(0.f, 180.f, 0.f);
+	UWorld* const World = GetWorld();
+	
+	const FRotator SpawnRotation = FRotator(0.f, 180.f, 0.f);
+	const FVector SpawnLocation = GetActorLocation();
 
-		const FVector SpawnLocation = GetActorLocation();
-
-		UWorld* const World = GetWorld();
-		if (World != NULL) {
-			if (Enemy_BP != nullptr) {
-				World->SpawnActor<AMyEnemy>(Enemy_BP, SpawnLocation, SpawnRotation);
+	int RandomEnemy = FMath::RandRange(1, 3);
+	
+	if (World != NULL) {
+		switch (RandomEnemy)
+		{
+		case 1:
+			if (Enemy_1 != nullptr) {
+				World->SpawnActor<AMyEnemy>(Enemy_1, SpawnLocation, SpawnRotation);
 			}
+			break;
+		case 2:
+			if (Enemy_2 != nullptr) {
+				World->SpawnActor<AMyEnemy>(Enemy_2, SpawnLocation, SpawnRotation);
+			}
+			break;
+		case 3:
+			if (Enemy_3 != nullptr) {
+				World->SpawnActor<AMyEnemy>(Enemy_3, SpawnLocation, SpawnRotation);
+			}
+			break;
+		default:
+			break;
 		}
-		//Timer flyttet til MyGameMode_BP
-	 // bSpawnTimerExpired = false;
-	//	World->GetTimerManager().SetTimer(TimerHandle_SpawnTimerExpired, this, &AMySpawnpoint::SpawnTimerExpired, SpawnRate);
-	//}
+	}
 }
-//Timer flyttet til MyGameMode_BP
-//void AMySpawnpoint::SpawnTimerExpired()
-//{
-//	bSpawnTimerExpired = true;
-//}
