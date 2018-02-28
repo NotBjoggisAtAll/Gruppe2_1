@@ -28,5 +28,10 @@ void AMyPowerUp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	float yRotation = -150.f * DeltaTime;
+	FRotator Rotation = FRotator(0.f, yRotation, 0.f);
+	
+	AddActorLocalRotation(Rotation);
+
 }
 
