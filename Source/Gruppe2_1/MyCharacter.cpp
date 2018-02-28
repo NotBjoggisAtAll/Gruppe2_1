@@ -39,7 +39,7 @@ AMyCharacter::AMyCharacter()
 
 	// Sets default values to variables
 	GunOffset = FVector(100.f, 0.f, 0.f);
-	FireRate = 0.2f;
+	FireRate = 1.f;
 	bCanFire = true;
 	hasLanded = true;
 	bIsWalking = false;
@@ -63,10 +63,12 @@ void AMyCharacter::Tick(float DeltaTime)
 // Runs when you use press the movement buttons
 void AMyCharacter::MoveForward(float Value) {
 	const UWorld* World = GetWorld();
+	FVector SpawnLocation = GetActorLocation();
 	if (Value != 0.f) {
 		bIsWalking = true;
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
 		AddMovementInput(Forward, Value);
+		UGameplayStatics::PlaySoundAtLocation(World, Walk, SpawnLocation);
 	}
 	bIsWalking = false;
 	/*if (DodgeForward == true) {
