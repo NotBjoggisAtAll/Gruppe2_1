@@ -12,10 +12,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
-//const FName AMyCharacter::MoveForwardBinding("MoveForward");
-//const FName AMyCharacter::MoveRightBinding("MoveRight");
-//const FName AMyCharacter::TurnBinding("Turn");
-
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
