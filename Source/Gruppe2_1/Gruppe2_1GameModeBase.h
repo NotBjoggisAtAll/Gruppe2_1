@@ -23,7 +23,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Enemies")
 	bool bCanSpawnEnemies;
-	
+
+	UPROPERTY(BlueprintReadWrite, Category = "Enemies")
+	bool bUnlimitedWaves;
+
 	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	int GetWaveNumber() { return WaveNumber; }
 

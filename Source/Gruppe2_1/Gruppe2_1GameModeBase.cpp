@@ -61,7 +61,11 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (bUnlimitedWaves) {
+		MaxWave = WaveNumber;
+	}
 	SpawnEnemies();
+	
 	NumberOfEnemies = FindAllEnemies();
 
 	//UE_LOG(LogTemp, Warning, TEXT("TEST"));	

@@ -62,13 +62,23 @@ void AMyCharacter::Tick(float DeltaTime)
 
 // Runs when you use press the movement buttons
 void AMyCharacter::MoveForward(float Value) {
+	const UWorld* World = GetWorld();
 	if (Value != 0.f) {
 		bIsWalking = true;
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
 		AddMovementInput(Forward, Value);
 	}
 	bIsWalking = false;
+	/*if (DodgeForward == true) {
+		UE_LOG(LogTemp, Warning, TEXT("DODGING!!"))
+	}
+	World->GetTimerManager().SetTimer(TimerHandle_DodgeForwardExpired, this, &AMyCharacter::DodgeForwardExpired, 1.f);
+	DodgeForward = false; */
 }
+
+//void AMyCharacter::DodgeForwardExpired() {
+//	DodgeForward = false;
+//}
 
 // Runs when you use press the movement buttons
 void AMyCharacter::MoveRight(float Value) {

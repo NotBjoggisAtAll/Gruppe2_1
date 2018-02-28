@@ -62,6 +62,10 @@ public:
 	void MoveRight(float Value);
 	
 	
+	//FTimerHandle TimerHandle_DodgeForwardExpired;
+	//void DodgeForwardExpired();
+	//bool DodgeForward;
+
 	bool hasLanded;
 
 	void MyJump();
