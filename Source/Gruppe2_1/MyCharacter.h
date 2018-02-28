@@ -36,6 +36,9 @@ public:
 	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
 		USoundBase* LandSound;
 
+	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
+		USoundBase* Walk;
+
 
 
 	/** Offset from the ships location to spawn projectiles */
