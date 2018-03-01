@@ -68,7 +68,7 @@ void AMyCharacter::MoveForward(float Value) {
 		bIsWalking = true;
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
 		AddMovementInput(Forward, Value);
-		UGameplayStatics::PlaySoundAtLocation(World, Walk, SpawnLocation);
+//		UGameplayStatics::PlaySoundAtLocation(World, Walk, SpawnLocation);
 	}
 	bIsWalking = false;
 	/*if (DodgeForward == true) {

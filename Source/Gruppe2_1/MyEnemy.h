@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MyEnemy.generated.h"
 
+
 UCLASS()
 class GRUPPE2_1_API AMyEnemy : public ACharacter
 {
@@ -23,10 +24,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	
+
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void Destroyed() override;
+private:
+//	UPROPERTY(VisibleAnywhere)
+//		UCapsuleComponent * CapsuleCollision;
 
 	
 	

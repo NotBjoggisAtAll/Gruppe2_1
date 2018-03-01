@@ -3,12 +3,18 @@
 #include "MyEnemy.h"
 #include "Gruppe2_1GameModeBase.h"
 #include "Projectile.h"
+#include "MyCharacter.h"
+#include "Components/CapsuleComponent.h"
+
 
 // Sets default values
 AMyEnemy::AMyEnemy()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+//	CapsuleCollision = CreateDefaultSubobject<UCapsuleComponent>("CapsuleCollision");
+//	CapsuleCollision->SetupAttachment(RootComponent);
+	
 
 }
 
@@ -16,6 +22,7 @@ AMyEnemy::AMyEnemy()
 void AMyEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyEnemy::OnOverlapBegin);
 	
 }
 
@@ -23,6 +30,13 @@ void AMyEnemy::BeginPlay()
 void AMyEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void AMyEnemy::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	
+	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin!"));
 
 }
 
@@ -50,3 +64,6 @@ void AMyEnemy::Destroyed() {
 	}
 }
 
+void OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+}
