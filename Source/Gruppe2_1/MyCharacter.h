@@ -60,6 +60,8 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 	int Health;
 
+	void TakeDamage();
+
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);

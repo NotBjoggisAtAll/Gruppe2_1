@@ -60,6 +60,15 @@ void AMyCharacter::Tick(float DeltaTime)
 	}
 }
 
+void AMyCharacter::TakeDamage()
+{
+	Health = Health - 100;
+	if (Health == 0)
+	{
+		Destroy();
+	}
+}
+
 // Runs when you use press the movement buttons
 void AMyCharacter::MoveForward(float Value) {
 	const UWorld* World = GetWorld();

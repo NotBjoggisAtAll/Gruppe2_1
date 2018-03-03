@@ -37,6 +37,11 @@ void AMyEnemy::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * Oth
 {
 	
 	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin!"));
+	auto Player = Cast<AMyCharacter>(OtherActor);
+	if (Player)
+	{
+		Player->TakeDamage();
+	}
 
 }
 
@@ -62,8 +67,4 @@ void AMyEnemy::Destroyed() {
 			MyGameMode->IncrementNumberOfEnemiesKilled();
 		}
 	}
-}
-
-void OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-{
 }
