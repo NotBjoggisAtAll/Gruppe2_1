@@ -43,6 +43,8 @@ AMyCharacter::AMyCharacter()
 	bCanFire = true;
 	hasLanded = true;
 	bIsWalking = false;
+	CanTakeDamage = true;
+	TakeDamageTimer = 0.f;
 }
 
 // Called when the game starts or when spawned
@@ -58,11 +60,27 @@ void AMyCharacter::Tick(float DeltaTime)
 	if (isShooting == true) {
 		Shooting();
 	}
+	if (CanTakeDamage == false)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Can not take damage!"));
+		TakeDamageTimer += DeltaTime;
+			if(TakeDamageTimer > 2)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Take Damage is on!"));
+				CanTakeDamage = true;
+				TakeDamageTimer = 0.f;
+			}
+	}
 }
 
 void AMyCharacter::TakeDamage()
 {
-	Health = Health - 100;
+	if (CanTakeDamage)
+	{
+		Health = Health - 100;
+		CanTakeDamage = false;
+	}
+	
 	if (Health == 0)
 	{
 		Destroy();

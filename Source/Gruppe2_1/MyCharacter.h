@@ -58,7 +58,7 @@ public:
 		bool bIsWalking;
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	int Health;
+		int Health;
 
 	void TakeDamage();
 
@@ -72,6 +72,9 @@ public:
 	//bool DodgeForward;
 
 	bool hasLanded;
+	
+	float TakeDamageTimer;
+	bool CanTakeDamage;
 
 	void MyJump();
 	virtual void Landed(const FHitResult& Hit) override;
