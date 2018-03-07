@@ -55,9 +55,11 @@ void AMyCharacter::BeginPlay()
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 	if (isShooting == true) {
 		Shooting();
 	}
+
 }
 
 // Runs when you use press the movement buttons

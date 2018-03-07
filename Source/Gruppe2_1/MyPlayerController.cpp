@@ -11,7 +11,7 @@ AMyPlayerController::AMyPlayerController(const FObjectInitializer & ObjectInitia
 
 void AMyPlayerController::BeginPlay() {
 	Super::BeginPlay();
-
+	bShowMouseCursor = true;
 	Player = Cast<AMyCharacter>(GetCharacter());
 }
 
@@ -23,10 +23,11 @@ void AMyPlayerController::RotateToCursor()
 {
 	if (Player != nullptr)
 	{
-		FHitResult CursorHit;
-		bShowMouseCursor = true;
-		GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1), true, OUT CursorHit);
-		auto NewYaw = UKismetMathLibrary::FindLookAtRotation(Player->GetActorLocation(), CursorHit.Location).Yaw;
+		FVector WorldLocation;
+		FVector WorldDirection;
+		DeprojectMousePositionToWorld(WorldLocation, WorldDirection);
+		auto Intersection = FMath::LinePlaneIntersection(WorldLocation, WorldLocation + (WorldDirection * 50000), Player->GetActorLocation(), FVector(0, 0, 1));
+		auto NewYaw = UKismetMathLibrary::FindLookAtRotation(Player->GetActorLocation(), Intersection).Yaw;
 		FRotator TargetRotation = FRotator(0.f, NewYaw, 0.f);
 		Player->GetCapsuleComponent()->SetWorldRotation(TargetRotation);
 	}
