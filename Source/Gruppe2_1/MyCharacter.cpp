@@ -35,15 +35,17 @@ AMyCharacter::AMyCharacter()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
-	Health = 500;
+	
 
 	// Sets default values to variables
+	Health = 500;
 	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 1.f;
 	bCanFire = true;
 	hasLanded = true;
 	bIsWalking = false;
 	CanTakeDamage = true;
+	IsHurt = false;
 	TakeDamageTimer = 0.f;
 }
 
@@ -69,6 +71,7 @@ void AMyCharacter::Tick(float DeltaTime)
 				UE_LOG(LogTemp, Warning, TEXT("Take Damage is on!"));
 				CanTakeDamage = true;
 				TakeDamageTimer = 0.f;
+				IsHurt = false;
 			}
 	}
 }
@@ -79,6 +82,7 @@ void AMyCharacter::TakeDamage()
 	{
 		Health = Health - 100;
 		CanTakeDamage = false;
+		IsHurt = true;
 	}
 	
 	if (Health == 0)

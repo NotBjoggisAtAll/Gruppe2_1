@@ -75,6 +75,8 @@ public:
 	
 	float TakeDamageTimer;
 	bool CanTakeDamage;
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	bool IsHurt;
 
 	void MyJump();
 	virtual void Landed(const FHitResult& Hit) override;
