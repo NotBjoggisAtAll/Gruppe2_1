@@ -21,26 +21,35 @@ public:
 	TArray<AMyEnemy*> Enemies;
 	TArray<AMySpawnpoint*> Spawnpoints;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Enemies")
+	UPROPERTY(BlueprintReadWrite, Category = "Spawning")
 	bool bCanSpawnEnemies;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Enemies")
+	UPROPERTY(BlueprintReadWrite, Category = "Spawning")
 	bool bUnlimitedWaves;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Spawning")
+	float SpawnRate;
+	
+	UPROPERTY(BlueprintReadWrite, Category = "Spawning")
+	int MaxNumberOfEnemies;
+	
+	UPROPERTY(BlueprintReadWrite, Category = "Spawning")
+	int MaxWave;
+	
 	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	int GetWaveNumber() { return WaveNumber; }
 
 	UFUNCTION(BlueprintCallable, Category = "Enemies")
-		int GetNumberOfEnemies() { return NumberOfEnemies; }
+	int GetNumberOfEnemies() { return NumberOfEnemies; }
 
 	UFUNCTION(BlueprintCallable, Category = "Enemies")
-		int GetMaxNumberOfEnemies() { return MaxNumberOfEnemies; }
+	int GetMaxNumberOfEnemies() { return MaxNumberOfEnemies; }
 
 	UFUNCTION(BlueprintCallable, Category = "Enemies")
 	int GetNumberOfEnemiesKilled() { return NumberOfEnemiesKilled; }
 
 	UFUNCTION(BlueprintCallable, Category = "Enemies")
-		void IncrementNumberOfEnemiesKilled() { NumberOfEnemiesKilled++; }
+	void IncrementNumberOfEnemiesKilled() { NumberOfEnemiesKilled++; }
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
@@ -60,15 +69,12 @@ protected:
 	int FindAllSpawnpoints();
 
 	int NumberOfSpawnpoints;
-	float SpawnRate;
 
 	int counter;
 
 	int WaveNumber;
-	int MaxWave;
 
 	int NumberOfEnemies;
-	int MaxNumberOfEnemies;
-	int NumberOfEnemiesKilled;
 
+	int NumberOfEnemiesKilled;
 };
