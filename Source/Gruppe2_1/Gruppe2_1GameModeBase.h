@@ -70,7 +70,7 @@ protected:
 
 	int NumberOfSpawnpoints;
 
-	int counter;
+	int NumberOfEnemiesSpawnedThisWave;
 
 	int WaveNumber;
 
