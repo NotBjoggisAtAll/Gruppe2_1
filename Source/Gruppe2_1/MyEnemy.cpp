@@ -4,7 +4,7 @@
 #include "Gruppe2_1GameModeBase.h"
 #include "Projectile.h"
 #include "MyCharacter.h"
-#include "Components/CapsuleComponentg.h"
+#include "Components/CapsuleComponent.h"
 
 
 // Sets default values
