@@ -3,6 +3,9 @@
 #include "MyEnemy.h"
 #include "Gruppe2_1GameModeBase.h"
 #include "Projectile.h"
+#include "MyCharacter.h"
+#include "Components/CapsuleComponentg.h"
+
 
 // Sets default values
 AMyEnemy::AMyEnemy()
@@ -10,12 +13,15 @@ AMyEnemy::AMyEnemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+
+
 }
 
 // Called when the game starts or when spawned
 void AMyEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AMyEnemy::OnHit);
 	
 }
 
@@ -47,6 +53,16 @@ void AMyEnemy::Destroyed() {
 		{
 			MyGameMode->IncrementNumberOfEnemiesKilled();
 		}
+	}
+}
+
+void AMyEnemy::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+{
+	auto Player = Cast<AMyCharacter>(OtherActor);
+	if (Player)
+	{
+		OtherActor->Destroy();
+		UE_LOG(LogTemp, Warning, TEXT("DODGING!!"))
 	}
 }
 
