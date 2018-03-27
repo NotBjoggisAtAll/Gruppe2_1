@@ -61,7 +61,7 @@ void AMyEnemy::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimit
 	auto Player = Cast<AMyCharacter>(OtherActor);
 	if (Player)
 	{
-		OtherActor->Destroy();
+		//OtherActor->Destroy();
 		UE_LOG(LogTemp, Warning, TEXT("DODGING!!"))
 	}
 }
