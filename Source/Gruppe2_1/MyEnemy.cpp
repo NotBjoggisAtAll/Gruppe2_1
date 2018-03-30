@@ -21,7 +21,7 @@ AMyEnemy::AMyEnemy()
 void AMyEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AMyEnemy::OnHit);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyEnemy::OnOverlapBegin);
 	
 }
 
@@ -56,13 +56,14 @@ void AMyEnemy::Destroyed() {
 	}
 }
 
-void AMyEnemy::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+void AMyEnemy::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	auto Player = Cast<AMyCharacter>(OtherActor);
 	if (Player)
 	{
 		//OtherActor->Destroy();
-		UE_LOG(LogTemp, Warning, TEXT("DODGING!!"))
+		UE_LOG(LogTemp, Warning, TEXT("ENEMYOVERLAP"))
 	}
 }
+
 
