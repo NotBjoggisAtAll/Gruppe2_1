@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "MyCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -12,7 +13,7 @@ AMyEnemy::AMyEnemy()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	Strength = 1.f;
 
 
 }
@@ -21,7 +22,7 @@ AMyEnemy::AMyEnemy()
 void AMyEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyEnemy::OnOverlapBegin);
+//	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyEnemy::OnOverlapBegin);
 	
 }
 
@@ -56,14 +57,17 @@ void AMyEnemy::Destroyed() {
 	}
 }
 
-void AMyEnemy::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+//void AMyEnemy::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+//{
+//	auto Player = Cast<AMyCharacter>(OtherActor);
+//	if (Player)
+//	{
+//		FHitResult HitResult;
+//		UGameplayStatics::ApplyPointDamage(OtherActor, Strength, GetActorForwardVector(), HitResult, GetController(), this, UDamageType::StaticClass());
+//	}
+//}
+
+int AMyEnemy::GetStrength()
 {
-	auto Player = Cast<AMyCharacter>(OtherActor);
-	if (Player)
-	{
-		//OtherActor->Destroy();
-		UE_LOG(LogTemp, Warning, TEXT("ENEMYOVERLAP"))
-	}
+	return Strength;
 }
-
-
