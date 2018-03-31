@@ -59,6 +59,7 @@ public:
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 	float Health;
+
 	int HowMuchDamage;
 
 
@@ -78,11 +79,13 @@ public:
 
 	bool isShooting;
 	bool bCanGetHurt;
+	bool FireRateOn;
 
 	void StartShooting();
 	void Shooting();
 	void StopShooting();
 	float DamageTimer;
+	float FireRateOnTimer;
 
 	void ShotTimerExpired();
 

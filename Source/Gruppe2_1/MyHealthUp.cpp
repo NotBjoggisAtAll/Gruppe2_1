@@ -23,11 +23,13 @@ void AMyHealthUp::BeginPlay()
 void AMyHealthUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 	{
 	UE_LOG(LogTemp, Warning, TEXT("Health Overlapping"))
-//		auto Player = Cast<AMyCharacter>(OtherActor);
-		if (OtherActor->IsA(AMyCharacter::StaticClass()))
-		{
+		auto Player = Cast<AMyCharacter>(OtherActor);
+		if(Player)
+		{	
+			
 			UE_LOG(LogTemp, Warning, TEXT("Found player"))
 			FHitResult HitResult;
 			UGameplayStatics::ApplyPointDamage(OtherActor, HealAmount, GetActorForwardVector(), HitResult, UGameplayStatics::GetPlayerController(GetWorld(), 0), this, UDamageType::StaticClass());
+			Destroy();
 		}
 	}

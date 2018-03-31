@@ -7,6 +7,9 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Engine/StaticMesh.h"
 #include "MyEnemy.h"
+#include "Math/UnrealMathUtility.h"
+#include "MyHealthUp.h"
+#include "MyFireRateUp.h"
 
 
 
@@ -57,6 +60,19 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 			EnemyDeath = OtherActor->GetActorLocation();
 			EnemyHit = true;
 			Enemy->Destroy();
+			int RandomNumber = FMath::RandRange(1, 10);
+                        UE_LOG(LogTemp, Warning, TEXT("My int is: %d"), RandomNumber)
+			if(RandomNumber > 7)
+			{
+				if (RandomNumber == 10)
+				{
+					GetWorld()->SpawnActor<AMyFireRateUp>(FireRate_BP, EnemyDeath, FRotator(0));
+				}
+				else
+				{
+					GetWorld()->SpawnActor<AMyHealthUp>(Health_BP, EnemyDeath, FRotator(0));
+				}
+			}
 		}
 	}
 	Destroy();

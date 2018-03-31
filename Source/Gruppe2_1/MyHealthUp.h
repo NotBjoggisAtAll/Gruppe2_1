@@ -17,6 +17,8 @@ public:
 		AMyHealthUp();
 		float HealAmount;
 
+
+
 		virtual void BeginPlay() override;
 protected:
 	UFUNCTION()
