@@ -12,6 +12,7 @@ AEnemy_1::AEnemy_1()
 
 void AEnemy_1::BeginPlay()
 {
+	Super::BeginPlay();
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AEnemy_1::OnOverlapBegin);
 }
 
