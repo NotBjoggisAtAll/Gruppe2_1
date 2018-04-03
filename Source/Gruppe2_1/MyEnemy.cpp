@@ -67,7 +67,3 @@ void AMyEnemy::Destroyed() {
 //	}
 //}
 
-int AMyEnemy::GetStrength()
-{
-	return Strength;
-}
