@@ -5,33 +5,28 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/SphereComponent.h"
-#include "MyPowerUp.generated.h"
-
+#include "Enemy_3_Projectile.generated.h"
 
 UCLASS()
-class GRUPPE2_1_API AMyPowerUp : public AActor
+class GRUPPE2_1_API AEnemy_3_Projectile : public AActor
 {
 	GENERATED_BODY()
 
-private:
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Projectile, meta = (AllowPrivateAccess = "true"))
-		UStaticMeshComponent* PowerUp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Projectile, meta = (AllowPrivateAccess = "true"))
-		USphereComponent* OverlapCollision;
-
-		
+		USphereComponent* EnemyProjectileComponent;
 	
 public:	
 	// Sets default values for this actor's properties
-	AMyPowerUp();
-
-	USphereComponent* GetSphere();
+	AEnemy_3_Projectile();
+	float Strength;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 
 public:	
 	// Called every frame

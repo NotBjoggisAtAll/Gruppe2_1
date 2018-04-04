@@ -58,7 +58,9 @@ public:
 		bool bIsWalking;
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	int Health;
+	float Health;
+
+	int HowMuchDamage;
 
 
 	void MoveForward(float Value);
@@ -76,10 +78,14 @@ public:
 
 
 	bool isShooting;
+	bool bCanGetHurt;
+	bool FireRateOn;
 
 	void StartShooting();
 	void Shooting();
 	void StopShooting();
+	float DamageTimer;
+	float FireRateOnTimer;
 
 	void ShotTimerExpired();
 
@@ -95,6 +101,12 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
+
+private:
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	
 	

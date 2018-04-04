@@ -11,6 +11,9 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "MyEnemy.h"
+#include "MyHealthUp.h"
+#include "MyFireRateUp.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -35,7 +38,8 @@ AMyCharacter::AMyCharacter()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
-	Health = 5;
+	Health = 10.f;
+	DamageTimer = 0;
 
 	// Sets default values to variables
 	GunOffset = FVector(100.f, 0.f, 0.f);
@@ -43,12 +47,15 @@ AMyCharacter::AMyCharacter()
 	bCanFire = true;
 	hasLanded = true;
 	bIsWalking = false;
+	bCanGetHurt = true;
+	FireRateOn = false;
 }
 
 // Called when the game starts or when spawned
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter::OnOverlapBegin);
 	
 }
 
@@ -59,7 +66,26 @@ void AMyCharacter::Tick(float DeltaTime)
 	if (isShooting == true) {
 		Shooting();
 	}
+	if (bCanGetHurt == false)
+	{
+		DamageTimer += DeltaTime;
 
+		if (DamageTimer >= 2)
+		{
+			bCanGetHurt = true;
+			DamageTimer = 0;
+			UE_LOG(LogTemp, Warning, TEXT("YouCanGetHurt"))
+		}
+	}
+	if (FireRateOn == true)
+	{
+		FireRateOnTimer += DeltaTime;
+		if (FireRateOnTimer > 2)
+		{
+			FireRate = 1;
+			FireRateOn = false;
+		}
+	}
 }
 
 // Runs when you use press the movement buttons
@@ -161,3 +187,36 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
+float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	if (bCanGetHurt || DamageAmount < 0)
+	{
+	Health -= DamageAmount;
+	bCanGetHurt = false;
+	if (Health > 10)
+	{
+		Health = 10.f;
+	}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OnCoolDown!"))
+	}
+	if (Health == 0)
+	{
+		Destroy();
+	}
+	return DamageAmount;
+}
+
+void AMyCharacter::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	auto FireRateUp = Cast<AMyFireRateUp>(OtherActor);
+	if (FireRateUp)
+	{
+			FireRateOnTimer = 0.f;
+			FireRate = 0.1f;
+			FireRateOn = true;
+			OtherActor->Destroy();
+	}
+}

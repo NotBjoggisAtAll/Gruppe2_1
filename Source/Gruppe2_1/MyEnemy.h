@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MyEnemy.generated.h"
 
+
 UCLASS()
 class GRUPPE2_1_API AMyEnemy : public ACharacter
 {
@@ -27,6 +28,14 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void Destroyed() override;
+
+	float Strength;
+
+	//UFUNCTION()
+		//void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
+
 
 	
 	

@@ -3,31 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "MyPowerUp.h"
-#include "MyHealthUp.generated.h"
+#include "MyEnemy.h"
+#include "Enemy_3.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GRUPPE2_1_API AMyHealthUp : public AMyPowerUp
+class GRUPPE2_1_API AEnemy_3 : public AMyEnemy
 {
 	GENERATED_BODY()
+	
 public:
-		AMyHealthUp();
-		float HealAmount;
+	AEnemy_3();
 
-
-
-		virtual void BeginPlay() override;
 protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	
 	
 	
-	
-
 
 };

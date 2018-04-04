@@ -2,7 +2,14 @@
 
 #include "MyPowerUp.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Components/SphereComponent.h"
+#include "Components/StaticMeshComponent.h"
 
+
+USphereComponent * AMyPowerUp::GetSphere()
+{
+	return OverlapCollision;
+}
 
 // Sets default values
 AMyPowerUp::AMyPowerUp()
@@ -10,18 +17,22 @@ AMyPowerUp::AMyPowerUp()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> ProjectileMeshAsset(TEXT("/Game/Meshes/Powerup.Powerup"));
-
+	
 	PowerUp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PowerUp"));
+	OverlapCollision = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
+	RootComponent = OverlapCollision;
+	PowerUp->SetupAttachment(RootComponent);
+	
+	
 
 }
 
 // Called when the game starts or when spawned
 void AMyPowerUp::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay();	
 }
+
 
 // Called every frame
 void AMyPowerUp::Tick(float DeltaTime)

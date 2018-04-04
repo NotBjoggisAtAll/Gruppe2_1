@@ -8,6 +8,8 @@
 
 class UProjectileMovementComponent;
 class UStaticMeshComponent;
+class AMyHealthUp;
+class AMyFireRateUp;
 
 UCLASS()
 class GRUPPE2_1_API AProjectile : public AActor
@@ -26,6 +28,11 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 	void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<AMyHealthUp> Health_BP;
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<AMyFireRateUp> FireRate_BP;
 
 	UPROPERTY(BlueprintReadOnly)
 	FVector EnemyDeath;
