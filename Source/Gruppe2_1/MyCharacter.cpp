@@ -62,10 +62,12 @@ void AMyCharacter::BeginPlay()
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
+	UWorld* World = GetWorld();
 	Super::Tick(DeltaTime);
 	if (isShooting == true) {
 		Shooting();
 	}
+		FireRateRemaining = World->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
 	if (bCanGetHurt == false)
 	{
 		DamageTimer += DeltaTime;

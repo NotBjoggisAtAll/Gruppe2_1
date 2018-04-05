@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+
 class AProjectile;
 class USoundBase;
 
@@ -40,7 +41,6 @@ public:
 		USoundBase* Walk;
 
 
-
 	/** Offset from the ships location to spawn projectiles */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		FVector GunOffset;
@@ -49,6 +49,8 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		float FireRate;
 
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	float FireRateRemaining;
 	/* Checks if the weapon can fire*/
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		bool bCanFire;
