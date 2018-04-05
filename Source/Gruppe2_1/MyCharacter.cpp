@@ -191,6 +191,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (bCanGetHurt || DamageAmount < 0)
 	{
 	Health -= DamageAmount;
