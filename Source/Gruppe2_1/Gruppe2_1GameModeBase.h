@@ -32,12 +32,12 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, Category = "Spawning")
 	int MaxNumberOfEnemies;
-	
-	UPROPERTY(BlueprintReadWrite, Category = "Spawning")
-	int MaxWave;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	int GetWaveNumber() { return WaveNumber; }
+	
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
+	int GetMaxWaveNumber() { return MaxWaveNumber; }
 
 	UFUNCTION(BlueprintCallable, Category = "Enemies")
 	int GetNumberOfEnemies() { return NumberOfEnemies; }
@@ -74,6 +74,8 @@ protected:
 
 	int WaveNumber;
 
+	int MaxWaveNumber;
+	
 	int NumberOfEnemies;
 
 	int NumberOfEnemiesKilled;

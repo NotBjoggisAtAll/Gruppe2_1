@@ -16,7 +16,7 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase() {
 	SpawnRate = 1.f;
 
 	WaveNumber = 1;
-	MaxWave = 3;
+	MaxWaveNumber = 3;
 
 	NumberOfEnemiesSpawnedThisWave = 0;
 
@@ -62,7 +62,7 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (bUnlimitedWaves) {
-		MaxWave = WaveNumber;
+		MaxWaveNumber = WaveNumber;
 	}
 	SpawnEnemies();
 	
@@ -72,7 +72,7 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 void AGruppe2_1GameModeBase::SpawnEnemies()
 {
 	if (bCanSpawnEnemies == true) {
-		if (WaveNumber <= MaxWave) {
+		if (WaveNumber <= MaxWaveNumber) {
 			if (NumberOfEnemiesSpawnedThisWave < MaxNumberOfEnemies) {
 				UWorld* World = GetWorld();
 				int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
