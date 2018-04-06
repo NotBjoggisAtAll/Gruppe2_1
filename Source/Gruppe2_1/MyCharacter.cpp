@@ -28,7 +28,7 @@ AMyCharacter::AMyCharacter()
 	// Camera boom
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 1000.f;
+	CameraBoom->TargetArmLength = 500.f;
 	CameraBoom->RelativeRotation = FRotator(-45.f, 130.f, 0.f);
 	CameraBoom->bUsePawnControlRotation = false;
 	CameraBoom->bInheritYaw = false;

@@ -80,6 +80,9 @@ public:
 
 
 	bool isShooting;
+
+
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
 	bool bCanGetHurt;
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
