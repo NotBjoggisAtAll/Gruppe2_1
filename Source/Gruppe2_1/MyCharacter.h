@@ -81,6 +81,8 @@ public:
 
 	bool isShooting;
 	bool bCanGetHurt;
+
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
 	bool FireRateOn;
 
 	void StartShooting();
