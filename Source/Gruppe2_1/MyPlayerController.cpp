@@ -11,7 +11,9 @@ AMyPlayerController::AMyPlayerController(const FObjectInitializer & ObjectInitia
 
 void AMyPlayerController::BeginPlay() {
 	Super::BeginPlay();
+
 	bShowMouseCursor = true;
+	CurrentMouseCursor = EMouseCursor::Crosshairs;
 	Player = Cast<AMyCharacter>(GetCharacter());
 }
 
