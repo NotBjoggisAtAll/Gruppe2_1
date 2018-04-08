@@ -205,7 +205,7 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEv
 	{
 		UE_LOG(LogTemp, Warning, TEXT("OnCoolDown!"))
 	}
-	if (Health == 0)
+	if (Health <= 0)
 	{
 		Destroy();
 	}
