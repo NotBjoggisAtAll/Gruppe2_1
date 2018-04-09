@@ -56,7 +56,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		if (Enemy) {
 			EnemyDeath = OtherActor->GetActorLocation();
 			EnemyHit = true;
-			Enemy->Destroy();
+			Enemy->GetDestroyed();
 			int RandomNumber = FMath::RandRange(1, 10);
                         UE_LOG(LogTemp, Warning, TEXT("My int is: %d"), RandomNumber)
 			if(RandomNumber > 7)

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Classes/Particles/ParticleSystemComponent.h"
 #include "MyEnemy.generated.h"
 
 UCLASS()
@@ -14,8 +15,12 @@ class GRUPPE2_1_API AMyEnemy : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMyEnemy();
+	void GetDestroyed();
+
 
 protected:
+	UPROPERTY(Category = Particles, EditAnywhere, BlueprintReadWrite)
+	class UParticleSystemComponent* PSC;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -27,5 +32,8 @@ protected:
 
 	virtual void Destroyed() override;
 
+	
+	bool GotHit;
+	int GetParticles;
 	float Strength;
 };
