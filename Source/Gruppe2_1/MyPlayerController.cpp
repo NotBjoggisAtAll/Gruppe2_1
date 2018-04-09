@@ -21,6 +21,7 @@ void AMyPlayerController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 	RotateToCursor();
 }
+
 void AMyPlayerController::RotateToCursor()
 {
 	if (Player != nullptr)

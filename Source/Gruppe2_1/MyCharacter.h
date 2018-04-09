@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
-
 class AProjectile;
 class USoundBase;
 
@@ -14,7 +13,7 @@ UCLASS()
 class GRUPPE2_1_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
+		
 	UPROPERTY(Category = Camera, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* CameraComponent;
 
@@ -40,11 +39,11 @@ public:
 	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
 		USoundBase* Walk;
 
-
 	/** Offset from the ships location to spawn projectiles */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		FVector GunOffset;
 
+	//TODO Make getters and setters for all variables
 	/* How fast the weapon will fire */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		float FireRate;
@@ -62,25 +61,17 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 	float Health;
 
-	int HowMuchDamage;
-
+protected:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	
-	
-	//FTimerHandle TimerHandle_DodgeForwardExpired;
-	//void DodgeForwardExpired();
-	//bool DodgeForward;
-
 	bool hasLanded;
 
 	void MyJump();
 	virtual void Landed(const FHitResult& Hit) override;
 
-
 	bool isShooting;
-
 
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
 	bool bCanGetHurt;
@@ -97,8 +88,7 @@ public:
 	void ShotTimerExpired();
 
 	/** Handle for efficient management of ShotTimerExpired timer */
-	FTimerHandle TimerHandle_ShotTimerExpired;
-public:	
+	FTimerHandle TimerHandle_ShotTimerExpired;	
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -111,10 +101,6 @@ public:
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
-private:
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	
-	
 };

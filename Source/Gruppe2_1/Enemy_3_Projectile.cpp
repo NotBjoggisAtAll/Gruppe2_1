@@ -4,7 +4,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "MyCharacter.h"
 
-
 // Sets default values
 AEnemy_3_Projectile::AEnemy_3_Projectile()
 {
@@ -13,8 +12,8 @@ AEnemy_3_Projectile::AEnemy_3_Projectile()
 
 	EnemyProjectileComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	RootComponent = EnemyProjectileComponent;
-	Strength = 2.f;
 
+	Strength = 2.f;
 }
 
 // Called when the game starts or when spawned
@@ -31,7 +30,6 @@ void AEnemy_3_Projectile::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, A
 	{
 		FHitResult HitResult;
 		UGameplayStatics::ApplyPointDamage(OtherActor, Strength, GetActorForwardVector(), HitResult, UGameplayStatics::GetPlayerController(GetWorld(), 0), this, UDamageType::StaticClass());
-		UE_LOG(LogTemp, Warning, TEXT("Enemy3_ProjectileHitYou!"))
 		Destroy();
 	}
 }
@@ -40,6 +38,4 @@ void AEnemy_3_Projectile::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, A
 void AEnemy_3_Projectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
-

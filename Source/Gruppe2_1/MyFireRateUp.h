@@ -6,9 +6,6 @@
 #include "MyPowerUp.h"
 #include "MyFireRateUp.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class GRUPPE2_1_API AMyFireRateUp : public AMyPowerUp
 {
@@ -16,13 +13,9 @@ class GRUPPE2_1_API AMyFireRateUp : public AMyPowerUp
 	
 public:
 	AMyFireRateUp();
-	virtual void BeginPlay() override;
 protected:
+	virtual void BeginPlay() override;
+	
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	
-	
-
-
 };

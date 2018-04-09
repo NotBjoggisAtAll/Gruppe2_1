@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MyTriggerVolume.h"
-// include draw debug helpers header file
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "MyCharacter.h"
+
 AMyTriggerVolume::AMyTriggerVolume()
 {
 	OnActorBeginOverlap.AddDynamic(this, &AMyTriggerVolume::OnOverlapBegin);

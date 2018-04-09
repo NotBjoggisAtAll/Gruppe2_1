@@ -2,10 +2,8 @@
 
 #include "MyFireRateUp.h"
 
-
 AMyFireRateUp::AMyFireRateUp()
 {
-
 }
 
 void AMyFireRateUp::BeginPlay()

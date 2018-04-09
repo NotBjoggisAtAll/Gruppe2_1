@@ -1,18 +1,15 @@
 // Sjekk hvilke includes jeg faktisk bruker
 #include "MyCharacter.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
-#include "Projectile.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
-#include "MyEnemy.h"
-#include "MyHealthUp.h"
+#include "Projectile.h"
 #include "MyFireRateUp.h"
 
 // Sets default values
@@ -38,10 +35,12 @@ AMyCharacter::AMyCharacter()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
+	// Sets default values to variables
 	Health = 10.f;
+
+	//TODO Sette opp TimerSystem??
 	DamageTimer = 0;
 
-	// Sets default values to variables
 	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 1.f;
 	bCanFire = true;
@@ -56,7 +55,6 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter::OnOverlapBegin);
-	
 }
 
 // Called every frame
@@ -70,6 +68,7 @@ void AMyCharacter::Tick(float DeltaTime)
 		FireRateRemaining = World->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
 	if (bCanGetHurt == false)
 	{
+		//TODO Refactor
 		DamageTimer += DeltaTime;
 
 		if (DamageTimer >= 2)
@@ -81,6 +80,7 @@ void AMyCharacter::Tick(float DeltaTime)
 	}
 	if (FireRateOn == true)
 	{
+		//TODO Refactor
 		FireRateOnTimer += DeltaTime;
 		if (FireRateOnTimer > 2)
 		{
@@ -102,16 +102,8 @@ void AMyCharacter::MoveForward(float Value) {
 		//UGameplayStatics::PlaySoundAtLocation(World, Walk, SpawnLocation);
 	}
 	bIsWalking = false;
-	/*if (DodgeForward == true) {
-		UE_LOG(LogTemp, Warning, TEXT("DODGING!!"))
-	}
-	World->GetTimerManager().SetTimer(TimerHandle_DodgeForwardExpired, this, &AMyCharacter::DodgeForwardExpired, 1.f);
-	DodgeForward = false; */
-}
 
-//void AMyCharacter::DodgeForwardExpired() {
-//	DodgeForward = false;
-//}
+}
 
 // Runs when you use press the movement buttons
 void AMyCharacter::MoveRight(float Value) {
@@ -125,12 +117,13 @@ void AMyCharacter::MoveRight(float Value) {
 
 // Runs when you press the Jump button
 void AMyCharacter::MyJump() {
+	//TODO Remove Jump ??
 	if (hasLanded == true) {
 	UWorld* const World = GetWorld();
 	FVector SpawnLocation = GetActorLocation();
-	Jump();
 	UGameplayStatics::PlaySoundAtLocation(World, JumpSound, SpawnLocation);
 	hasLanded = false;
+	Jump();
 	}
 }
 
@@ -141,6 +134,7 @@ void AMyCharacter::Landed(const FHitResult& Hit)
 	UGameplayStatics::PlaySoundAtLocation(World, LandSound, GetActorLocation());
 	hasLanded = true;
 }
+
 // Runs when you press the Shoot button
 void AMyCharacter::StartShooting()
 {
@@ -164,6 +158,7 @@ void AMyCharacter::Shooting()
 		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
 	}
 }
+
 // Runs when you release the Shoot button
 void AMyCharacter::StopShooting()
 {
@@ -194,16 +189,12 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEv
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (bCanGetHurt || DamageAmount < 0)
 	{
-	Health -= DamageAmount;
-	bCanGetHurt = false;
+		Health -= DamageAmount;
+		bCanGetHurt = false;
 	if (Health > 10)
-	{
-		Health = 10.f;
-	}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OnCoolDown!"))
+		{
+			Health = 10.f;
+		}
 	}
 	if (Health <= 0)
 	{

@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "MyEnemy.generated.h"
 
-
 UCLASS()
 class GRUPPE2_1_API AMyEnemy : public ACharacter
 {
@@ -20,7 +19,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -30,13 +28,4 @@ public:
 	virtual void Destroyed() override;
 
 	float Strength;
-
-	//UFUNCTION()
-		//void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-
-
-
-	
-	
 };

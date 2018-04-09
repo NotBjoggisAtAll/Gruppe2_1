@@ -6,9 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "MyPlayerController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class GRUPPE2_1_API AMyPlayerController : public APlayerController
 {
@@ -18,7 +15,7 @@ class GRUPPE2_1_API AMyPlayerController : public APlayerController
 
 		virtual void BeginPlay() override;
 		virtual void Tick(float DeltaTime) override;
-
+private:
 		void RotateToCursor();
 	
 	class AMyCharacter* Player;

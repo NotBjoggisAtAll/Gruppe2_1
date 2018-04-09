@@ -6,7 +6,6 @@
 #include "Engine/TriggerVolume.h"
 #include "MyTriggerVolume.generated.h"
 
-
 UCLASS()
 class GRUPPE2_1_API AMyTriggerVolume : public ATriggerVolume
 {
@@ -18,6 +17,7 @@ protected:
 	// constructor sets default values for this actor's properties
 	AMyTriggerVolume();
 
+protected:
 	// overlap begin function
 	UFUNCTION()
 		void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);

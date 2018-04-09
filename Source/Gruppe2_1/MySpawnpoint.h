@@ -6,9 +6,6 @@
 #include "Engine/TargetPoint.h"
 #include "MySpawnpoint.generated.h"
 
-/**
-*
-*/
 class AMyEnemy;
 
 UCLASS()

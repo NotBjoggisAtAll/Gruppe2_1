@@ -9,22 +9,20 @@
 #include "MyEnemy.h"
 
 AGruppe2_1GameModeBase::AGruppe2_1GameModeBase() {
-
 	PrimaryActorTick.bCanEverTick = true;
 
 	bCanSpawnEnemies = true;
 	SpawnRate = 1.f;
+	NumberOfEnemiesSpawnedThisWave = 0;
 
 	WaveNumber = 1;
 	MaxWaveNumber = 3;
 
-	NumberOfEnemiesSpawnedThisWave = 0;
-
 	MaxNumberOfEnemies = 10;
 	NumberOfEnemies = 0;
 	NumberOfEnemiesKilled = 0;
-
 }
+
 // Finds all enemies, adds them to the array and return the number
 int AGruppe2_1GameModeBase::FindAllEnemies()
 {
@@ -69,6 +67,7 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 	NumberOfEnemies = FindAllEnemies();
 
 }
+
 void AGruppe2_1GameModeBase::SpawnEnemies()
 {
 	if (bCanSpawnEnemies == true) {
@@ -93,7 +92,6 @@ void AGruppe2_1GameModeBase::CheckIfNewWave()
 		NumberOfEnemiesSpawnedThisWave = 0;
 	}
 }
-
 
 void AGruppe2_1GameModeBase::ResetCanSpawnEnemy() 
 {

@@ -2,8 +2,8 @@
 
 #include "Enemy_1.h"
 #include "Kismet/GameplayStatics.h"
-#include "MyCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "MyCharacter.h"
 
 AEnemy_1::AEnemy_1()
 {
@@ -23,7 +23,6 @@ void AEnemy_1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * Oth
 	{
 		FHitResult HitResult;
 		UGameplayStatics::ApplyPointDamage(OtherActor, Strength, GetActorForwardVector(), HitResult, GetController(), this, UDamageType::StaticClass());
-		UE_LOG(LogTemp, Warning, TEXT("Enemy1HitYou!"))
 	}
 }
 

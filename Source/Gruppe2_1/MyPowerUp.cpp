@@ -5,26 +5,16 @@
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 
-
-USphereComponent * AMyPowerUp::GetSphere()
-{
-	return OverlapCollision;
-}
-
 // Sets default values
 AMyPowerUp::AMyPowerUp()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	
 	PowerUp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PowerUp"));
 	OverlapCollision = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	RootComponent = OverlapCollision;
 	PowerUp->SetupAttachment(RootComponent);
-	
-	
-
 }
 
 // Called when the game starts or when spawned
@@ -32,7 +22,6 @@ void AMyPowerUp::BeginPlay()
 {
 	Super::BeginPlay();	
 }
-
 
 // Called every frame
 void AMyPowerUp::Tick(float DeltaTime)
@@ -43,6 +32,9 @@ void AMyPowerUp::Tick(float DeltaTime)
 	FRotator Rotation = FRotator(0.f, yRotation, 0.f);
 	
 	AddActorLocalRotation(Rotation);
-
 }
 
+USphereComponent * AMyPowerUp::GetSphere()
+{
+	return OverlapCollision;
+}
