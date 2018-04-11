@@ -19,7 +19,11 @@ void AMyPlayerController::BeginPlay() {
 
 void AMyPlayerController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	RotateToCursor();
+	if (IsPaused()) {
+	}
+	else {
+		RotateToCursor();
+	}
 }
 
 void AMyPlayerController::RotateToCursor()

@@ -176,9 +176,14 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEv
 	}
 	if (Health <= 0)
 	{
-		Destroy();
+		UWorld* World = GetWorld();
+	//	World->GetTimerManager().SetTimer(TimerHandle_DestroyCharacter, this, &AMyCharacter::DestroyCharacter, 1.f);
 	}
 	return DamageAmount;
+}
+
+void AMyCharacter::DestroyCharacter() {
+//	Destroy();
 }
 
 void AMyCharacter::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)

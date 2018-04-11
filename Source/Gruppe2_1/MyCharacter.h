@@ -79,6 +79,10 @@ protected:
 	/** Handle for efficient management of ShotTimerExpired timer */
 	FTimerHandle TimerHandle_ShotTimerExpired;	
 
+	FTimerHandle TimerHandle_DestroyCharacter;
+
+	void DestroyCharacter();
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
