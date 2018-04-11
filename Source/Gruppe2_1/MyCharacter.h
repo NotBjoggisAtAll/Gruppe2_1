@@ -52,8 +52,8 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		bool bIsWalking;
 
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	float Health;
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Health")
+		float GetHealth() { return Health; }
 
 protected:
 
@@ -65,6 +65,8 @@ protected:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
 	bool bCanGetHurt;
 
+	float Health;
+
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
 	bool FireRateOn;
 
@@ -74,14 +76,15 @@ protected:
 	float DamageTimer;
 	float FireRateOnTimer;
 
-	void ShotTimerExpired();
-
-	/** Handle for efficient management of ShotTimerExpired timer */
+	//Timers
 	FTimerHandle TimerHandle_ShotTimerExpired;	
+	FTimerHandle TimerHandle_ResetCanGetHurt;
+	FTimerHandle TimerHandle_ResetToNormalFireRate;
+	
+	void ShotTimerExpired();
+	void ResetCanGetHurt();
+	void ResetToNormalFireRate();
 
-	FTimerHandle TimerHandle_DestroyCharacter;
-
-	void DestroyCharacter();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

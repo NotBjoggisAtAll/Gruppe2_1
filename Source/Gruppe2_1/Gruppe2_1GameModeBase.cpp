@@ -8,7 +8,8 @@
 #include "MySpawnpoint.h"
 #include "MyEnemy.h"
 
-AGruppe2_1GameModeBase::AGruppe2_1GameModeBase() {
+AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
+{
 	PrimaryActorTick.bCanEverTick = true;
 
 	bCanSpawnEnemies = true;
@@ -18,7 +19,7 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase() {
 	WaveNumber = 1;
 	MaxWaveNumber = 3;
 
-	MaxNumberOfEnemies = 10;
+	MaxNumberOfEnemiesThisWave = 10;
 	NumberOfEnemies = 0;
 	NumberOfEnemiesKilled = 0;
 }
@@ -53,26 +54,32 @@ void AGruppe2_1GameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	NumberOfSpawnpoints = FindAllSpawnpoints();
+	
+	if (bUnlimitedWaves)
+	{
+		MaxWaveNumber = WaveNumber;
+	}
 }
 
 void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (bUnlimitedWaves) {
-		MaxWaveNumber = WaveNumber;
-	}
 	SpawnEnemies();
 	
 	NumberOfEnemies = FindAllEnemies();
 
 }
-
+//TODO Sette opp økende antall enemies per wave.
+//TODO Sette opp en funksjon som kjører når du er ferdig med alle waves.
 void AGruppe2_1GameModeBase::SpawnEnemies()
 {
-	if (bCanSpawnEnemies == true) {
-		if (WaveNumber <= MaxWaveNumber) {
-			if (NumberOfEnemiesSpawnedThisWave < MaxNumberOfEnemies) {
+	if (bCanSpawnEnemies == true)
+	{
+		if (WaveNumber <= MaxWaveNumber)
+		{
+			if (NumberOfEnemiesSpawnedThisWave < MaxNumberOfEnemiesThisWave)
+			{
 				UWorld* World = GetWorld();
 				int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
 				Spawnpoints[random]->SpawnEnemy();
@@ -86,13 +93,14 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 
 void AGruppe2_1GameModeBase::CheckIfNewWave()
 {
-	if ((NumberOfEnemiesSpawnedThisWave == MaxNumberOfEnemies) && NumberOfEnemies == 0)
+	if ((NumberOfEnemiesSpawnedThisWave == MaxNumberOfEnemiesThisWave) && NumberOfEnemies == 0)
 	{
 		WaveNumber++;
 		NumberOfEnemiesSpawnedThisWave = 0;
 	}
 }
 
+//Resets so a new enemy can be spawned.
 void AGruppe2_1GameModeBase::ResetCanSpawnEnemy() 
 {
 	bCanSpawnEnemies = true;

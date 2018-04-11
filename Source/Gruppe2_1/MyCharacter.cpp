@@ -38,9 +38,6 @@ AMyCharacter::AMyCharacter()
 	// Sets default values to variables
 	Health = 10.f;
 
-	//TODO Sette opp TimerSystem??
-	DamageTimer = 0;
-
 	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 1.f;
 	bCanFire = true;
@@ -61,39 +58,36 @@ void AMyCharacter::Tick(float DeltaTime)
 {
 	UWorld* World = GetWorld();
 	Super::Tick(DeltaTime);
-	if (isShooting == true) {
+
+	if (isShooting == true)
+	{
 		Shooting();
 	}
 		FireRateRemaining = World->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
-	if (bCanGetHurt == false)
-	{
-		//TODO Refactor
-		DamageTimer += DeltaTime;
-
-		if (DamageTimer >= 2)
-		{
-			bCanGetHurt = true;
-			DamageTimer = 0;
-			UE_LOG(LogTemp, Warning, TEXT("YouCanGetHurt"))
-		}
-	}
-	if (FireRateOn == true)
-	{
-		//TODO Refactor
-		FireRateOnTimer += DeltaTime;
-		if (FireRateOnTimer > 2)
-		{
-			FireRate = 1;
-			FireRateOn = false;
-		}
-	}
 }
 
+void AMyCharacter::ResetCanGetHurt()
+{
+	bCanGetHurt = true;
+
+	UE_LOG(LogTemp, Warning, TEXT("YouCanGetHurt"))
+
+}
+
+void AMyCharacter::ResetToNormalFireRate()
+{
+	FireRate = 1.f;
+
+	UE_LOG(LogTemp, Warning, TEXT("Back to normal FireRate"))
+
+}
 // Runs when you use press the movement buttons
-void AMyCharacter::MoveForward(float Value) {
+void AMyCharacter::MoveForward(float Value)
+{
 	const UWorld* World = GetWorld();
 	FVector SpawnLocation = GetActorLocation();
-	if (Value != 0.f) {
+	if (Value != 0.f)
+	{
 		bIsWalking = true;
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
 		AddMovementInput(Forward, Value);
@@ -101,7 +95,6 @@ void AMyCharacter::MoveForward(float Value) {
 		//UGameplayStatics::PlaySoundAtLocation(World, Walk, SpawnLocation);
 	}
 	bIsWalking = false;
-
 }
 
 // Runs when you use press the movement buttons
@@ -123,13 +116,15 @@ void AMyCharacter::StartShooting()
 // Runs while you hold the Shoot button
 void AMyCharacter::Shooting()
 {
-	if (bCanFire == true) {
+	if (bCanFire == true)
+	{
 		const FVector FireDirection = GetActorForwardVector();
 		const FRotator FireRotation = FireDirection.Rotation();
 		const FVector SpawnLocation = GetActorLocation() + FireRotation.RotateVector(GunOffset); //TODO Spørre om hvorfor dette ikke fungerer
 
 		UWorld* const World = GetWorld();
-		if (World != NULL) {
+		if (World != NULL)
+		{
 			World->SpawnActor<AProjectile>(Projectile_BP, SpawnLocation, FireRotation);
 			UGameplayStatics::PlaySoundAtLocation(World, FireShot, GetActorLocation());
 		}
@@ -167,23 +162,16 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEv
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (bCanGetHurt || DamageAmount < 0)
 	{
+		UWorld* World = GetWorld();
 		Health -= DamageAmount;
 		bCanGetHurt = false;
+		World->GetTimerManager().SetTimer(TimerHandle_ResetCanGetHurt, this, &AMyCharacter::ResetCanGetHurt, 2.f); //TODO Lag en variabel istedenfor hardkodet verdi.
 	if (Health > 10)
 		{
 			Health = 10.f;
 		}
 	}
-	if (Health <= 0)
-	{
-		UWorld* World = GetWorld();
-	//	World->GetTimerManager().SetTimer(TimerHandle_DestroyCharacter, this, &AMyCharacter::DestroyCharacter, 1.f);
-	}
 	return DamageAmount;
-}
-
-void AMyCharacter::DestroyCharacter() {
-//	Destroy();
 }
 
 void AMyCharacter::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -191,9 +179,10 @@ void AMyCharacter::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor *
 	auto FireRateUp = Cast<AMyFireRateUp>(OtherActor);
 	if (FireRateUp)
 	{
-			FireRateOnTimer = 0.f;
+			UWorld* World = GetWorld();
 			FireRate = 0.1f;
 			FireRateOn = true;
+			World->GetTimerManager().SetTimer(TimerHandle_ResetCanGetHurt, this, &AMyCharacter::ResetToNormalFireRate, 2.f); //TODO Lag en variabel istedenfor hardkodet verdi.
 			OtherActor->Destroy();
 	}
 }

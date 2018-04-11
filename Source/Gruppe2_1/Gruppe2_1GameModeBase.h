@@ -34,7 +34,7 @@ public:
 	int GetNumberOfEnemies() { return NumberOfEnemies; }
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
-	int GetMaxNumberOfEnemies() { return MaxNumberOfEnemies; }
+	int GetMaxNumberOfEnemies() { return MaxNumberOfEnemiesThisWave; }
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
 	int GetNumberOfEnemiesKilled() { return NumberOfEnemiesKilled; }
@@ -68,7 +68,6 @@ private:
 	float SpawnRate;
 	
 
-
 	int NumberOfSpawnpoints;
 	int NumberOfEnemiesSpawnedThisWave;
 	
@@ -78,5 +77,5 @@ private:
 	
 	int NumberOfEnemies;
 	int NumberOfEnemiesKilled;
-	int MaxNumberOfEnemies;
+	int MaxNumberOfEnemiesThisWave;
 };
