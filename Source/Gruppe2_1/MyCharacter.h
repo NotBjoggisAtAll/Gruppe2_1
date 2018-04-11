@@ -31,12 +31,6 @@ public:
 		USoundBase* FireShot;
 
 	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
-		USoundBase* JumpSound;
-
-	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
-		USoundBase* LandSound;
-
-	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
 		USoundBase* Walk;
 
 	/** Offset from the ships location to spawn projectiles */
@@ -65,11 +59,6 @@ protected:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-	
-	bool hasLanded;
-
-	void MyJump();
-	virtual void Landed(const FHitResult& Hit) override;
 
 	bool isShooting;
 

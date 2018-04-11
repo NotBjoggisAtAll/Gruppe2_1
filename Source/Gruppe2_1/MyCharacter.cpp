@@ -44,7 +44,6 @@ AMyCharacter::AMyCharacter()
 	GunOffset = FVector(100.f, 0.f, 0.f);
 	FireRate = 1.f;
 	bCanFire = true;
-	hasLanded = true;
 	bIsWalking = false;
 	bCanGetHurt = true;
 	FireRateOn = false;
@@ -115,26 +114,6 @@ void AMyCharacter::MoveRight(float Value) {
 	bIsWalking = false;
 }
 
-// Runs when you press the Jump button
-void AMyCharacter::MyJump() {
-	//TODO Remove Jump ??
-	if (hasLanded == true) {
-	UWorld* const World = GetWorld();
-	FVector SpawnLocation = GetActorLocation();
-	UGameplayStatics::PlaySoundAtLocation(World, JumpSound, SpawnLocation);
-	hasLanded = false;
-	Jump();
-	}
-}
-
-void AMyCharacter::Landed(const FHitResult& Hit)
-{
-	Super::Landed(Hit);
-	UWorld* World = GetWorld();
-	UGameplayStatics::PlaySoundAtLocation(World, LandSound, GetActorLocation());
-	hasLanded = true;
-}
-
 // Runs when you press the Shoot button
 void AMyCharacter::StartShooting()
 {
@@ -178,7 +157,6 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	//Set up key bindings
 	PlayerInputComponent->BindAxis("MoveForward", this , &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMyCharacter::MyJump);
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMyCharacter::StartShooting);
 	PlayerInputComponent->BindAction("Shoot", IE_Released, this, &AMyCharacter::StopShooting);
 
