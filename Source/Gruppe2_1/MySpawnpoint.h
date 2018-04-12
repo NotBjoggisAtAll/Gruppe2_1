@@ -12,7 +12,6 @@ UCLASS()
 class GRUPPE2_1_API AMySpawnpoint : public ATargetPoint
 {
 	GENERATED_BODY()
-public:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AMyEnemy> Enemy_1;
@@ -23,8 +22,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AMyEnemy> Enemy_3;
 
+public:
 	AMySpawnpoint();
 
-	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	void SpawnEnemy();
 };

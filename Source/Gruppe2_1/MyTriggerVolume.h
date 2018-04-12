@@ -10,15 +10,13 @@ UCLASS()
 class GRUPPE2_1_API AMyTriggerVolume : public ATriggerVolume
 {
 	GENERATED_BODY()
+
+public:
+		AMyTriggerVolume();
+
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// constructor sets default values for this actor's properties
-	AMyTriggerVolume();
-
-protected:
-	// overlap begin function
 	UFUNCTION()
-		void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
+	void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 };

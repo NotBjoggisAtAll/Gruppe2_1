@@ -15,67 +15,73 @@ class GRUPPE2_1_API AGruppe2_1GameModeBase : public AGameModeBase
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Enemies")
+	
+	AGruppe2_1GameModeBase();
+
+	UFUNCTION(BlueprintCallable, Category = "Enemy")
 	void IncrementNumberOfEnemiesKilled() { NumberOfEnemiesKilled++; }
 	
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
-	bool GetUnlimitedWaves() { return bUnlimitedWaves; }
+	//Getters
 	
-	UFUNCTION(BlueprintCallable, Category = "Wave")
-	void SetUnlimitedWaves(bool UnlimitedWaves) { bUnlimitedWaves = UnlimitedWaves; }
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
+	bool GetUnlimitedWaves() const { return bUnlimitedWaves; }
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
+	int GetWaveNumber() const { return WaveNumber; }
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
-	int GetWaveNumber() { return WaveNumber; }
-
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
-	int GetMaxWaveNumber() { return MaxWaveNumber; }
+	int GetMaxWaveNumber() const { return MaxWaveNumber; }
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
-	int GetNumberOfEnemies() { return NumberOfEnemies; }
+	int GetNumberOfEnemies() const { return NumberOfEnemies; }
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
-	int GetMaxNumberOfEnemies() { return MaxNumberOfEnemiesThisWave; }
+	int GetMaxNumberOfEnemies() const { return MaxNumberOfEnemiesThisWave; }
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
 	int GetNumberOfEnemiesKilled() { return NumberOfEnemiesKilled; }
 
-private:
+	//Setters
 
-	AGruppe2_1GameModeBase();
+	UFUNCTION(BlueprintCallable, Category = "Wave")
+	void SetUnlimitedWaves(bool UnlimitedWaves) { bUnlimitedWaves = UnlimitedWaves; }
 
-	FTimerHandle TimerHandle_CanSpawnEnemy;
-	
-	TArray<AMyEnemy*> Enemies;
+protected:
 
-	TArray<AMySpawnpoint*> Spawnpoints;
-
+	//Functions
 	virtual void BeginPlay() override;
 	
 	virtual void Tick(float DeltaTime) override;
-	
+
 	void SpawnEnemies();
 
 	void CheckIfNewWave();
-
-	void ResetCanSpawnEnemy();
-
+	
 	int FindAllEnemies();
 
 	int FindAllSpawnpoints();
 
+	//Timers
+
+	FTimerHandle TimerHandle_ResetCanSpawnEnemy;
+	
+	void ResetCanSpawnEnemy();
+	
+	//Variables
+
 	bool bCanSpawnEnemies;
+	bool bUnlimitedWaves;
 
 	float SpawnRate;
-	
 
 	int NumberOfSpawnpoints;
-	int NumberOfEnemiesSpawnedThisWave;
-	
-	bool bUnlimitedWaves;
 	int WaveNumber;
 	int MaxWaveNumber;
-	
 	int NumberOfEnemies;
-	int NumberOfEnemiesKilled;
+	int NumberOfEnemiesSpawnedThisWave;
 	int MaxNumberOfEnemiesThisWave;
+	int NumberOfEnemiesKilled;
+	
+	TArray<AMyEnemy*> Enemies;
+	TArray<AMySpawnpoint*> Spawnpoints;
 };
