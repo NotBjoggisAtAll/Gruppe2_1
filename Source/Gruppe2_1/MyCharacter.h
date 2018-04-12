@@ -24,59 +24,55 @@ class GRUPPE2_1_API AMyCharacter : public ACharacter
 		TSubclassOf<AProjectile> Projectile_BP;
 
 public:
-	// Sets default values for this character's properties
+
 	AMyCharacter();
 
-	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
+	//Audio 
+
+	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
 		USoundBase* FireShot;
 
-	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
 		USoundBase* Walk;
 
-	/** Offset from the ships location to spawn projectiles */
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-		FVector GunOffset;
-
-	//TODO Make getters and setters for all variables
-	/* How fast the weapon will fire */
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-		float FireRate;
-
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	float FireRateRemaining;
-	/* Checks if the weapon can fire*/
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-		bool bCanFire;
-
-	/* Checks if the weapon can fire*/
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-		bool bIsWalking;
+	//Getters
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Health")
-		float GetHealth() { return Health; }
+		float GetHealth() const { return Health; }
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Health")
+		bool GetCanGetHurt() const { return bCanGetHurt; }
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FireRate")
+		bool GetFireRateOn() const { return bFireRateOn; }
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FireRate")
+		float GetFireRateRemaining() const { return FireRateRemaining; }
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FireRate")
+		bool GetCanFire() const { return bCanFire; }
 
 protected:
+
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	//Input functions
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
-	bool isShooting;
-
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
-	bool bCanGetHurt;
-
-	float Health;
-
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadOnly)
-	bool FireRateOn;
-
 	void StartShooting();
-	void Shooting();
 	void StopShooting();
-	float DamageTimer;
-	float FireRateOnTimer;
 
-	//Timers
+	void Shooting();
+
+	//Timerhandles and function related to them
 	FTimerHandle TimerHandle_ShotTimerExpired;	
 	FTimerHandle TimerHandle_ResetCanGetHurt;
 	FTimerHandle TimerHandle_ResetToNormalFireRate;
@@ -85,18 +81,16 @@ protected:
 	void ResetCanGetHurt();
 	void ResetToNormalFireRate();
 
+	//Variables
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	bool bCanGetHurt;
+	bool bIsShooting;
+	bool bCanFire;
+	bool bFireRateOn;
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	float Health;
+	float FireRate;
+	float FireRateRemaining;
 	
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
-
-	UFUNCTION()
-		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	FVector GunOffset;
 };

@@ -42,6 +42,8 @@ AProjectile::AProjectile()
 }
 void AProjectile::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+
 	float xRotation = 250.f * DeltaTime;
 	FRotator ProjectileRotation = FRotator(0.f, 0.f, xRotation);
 	AddActorLocalRotation(ProjectileRotation);
@@ -58,7 +60,6 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 			EnemyHit = true;
 			Enemy->GetDestroyed();
 			int RandomNumber = FMath::RandRange(1, 10);
-                        UE_LOG(LogTemp, Warning, TEXT("My int is: %d"), RandomNumber)
 			if(RandomNumber > 7)
 			{
 				if (RandomNumber == 10)
