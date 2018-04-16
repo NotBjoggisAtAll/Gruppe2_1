@@ -23,6 +23,13 @@ public:
 	
 	//Getters
 	
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Timer")
+	float GetTimerRemaining() const { return TimerRemaining; }
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Timer")
+	float GetSpawnTimer() const { return SpawnTimer; }
+
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
 	bool GetUnlimitedWaves() const { return bUnlimitedWaves; }
 	
@@ -55,6 +62,8 @@ protected:
 
 	void SpawnEnemies();
 
+	void SpawnEnemiesTimeBased();
+
 	void CheckIfNewWave();
 	
 	int FindAllEnemies();
@@ -64,15 +73,22 @@ protected:
 	//Timers
 
 	FTimerHandle TimerHandle_ResetCanSpawnEnemy;
-	
+
+	FTimerHandle TimerHandle_SetTimerDone;
+
 	void ResetCanSpawnEnemy();
+
+	void SetTimerDone();
 	
 	//Variables
 
 	bool bCanSpawnEnemies;
 	bool bUnlimitedWaves;
+	bool bTimerNotDone;
 
 	float SpawnRate;
+	float SpawnTimer;
+	float TimerRemaining;
 
 	int NumberOfSpawnpoints;
 	int WaveNumber;

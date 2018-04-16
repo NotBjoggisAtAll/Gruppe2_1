@@ -14,9 +14,10 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
 
 	bCanSpawnEnemies = true;
 	bUnlimitedWaves = false;
+	bTimerNotDone = true;
 
 	SpawnRate = 1.f;
-	
+	SpawnTimer = 60.f;
 	NumberOfSpawnpoints = 0;
 
 	WaveNumber = 1;
@@ -32,6 +33,7 @@ void AGruppe2_1GameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	NumberOfSpawnpoints = FindAllSpawnpoints();
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_SetTimerDone, this, &AGruppe2_1GameModeBase::SetTimerDone, SpawnTimer); //TODO Hardcoded variabel!!
 
 	if (bUnlimitedWaves)
 	{
@@ -43,8 +45,10 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	SpawnEnemies();
+	SpawnEnemiesTimeBased();
 	
+	TimerRemaining = GetWorld()->GetTimerManager().GetTimerRemaining(TimerHandle_SetTimerDone);
+
 	NumberOfEnemies = FindAllEnemies();
 
 }
@@ -57,17 +61,31 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 	{
 		if (WaveNumber <= MaxWaveNumber)
 		{
+			MaxNumberOfEnemiesThisWave = 10 * WaveNumber * 1.2;
 			if (NumberOfEnemiesSpawnedThisWave < MaxNumberOfEnemiesThisWave)
 			{
-				UWorld* World = GetWorld();
 				int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
 				Spawnpoints[random]->SpawnEnemy();
 				bCanSpawnEnemies = false;
-				World->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
+				GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
 			}
 		}
 	}
 	CheckIfNewWave();
+}
+
+void AGruppe2_1GameModeBase::SpawnEnemiesTimeBased()
+{
+	if (bCanSpawnEnemies == true)
+	{
+		if (bTimerNotDone == true)
+		{
+			int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
+			Spawnpoints[random]->SpawnEnemy();
+			bCanSpawnEnemies = false;
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
+		}
+	}
 }
 
 void AGruppe2_1GameModeBase::CheckIfNewWave()
@@ -107,4 +125,9 @@ void AGruppe2_1GameModeBase::ResetCanSpawnEnemy()
 {
 	bCanSpawnEnemies = true;
 	NumberOfEnemiesSpawnedThisWave++;
+}
+
+void AGruppe2_1GameModeBase::SetTimerDone()
+{
+	bTimerNotDone = false;
 }
