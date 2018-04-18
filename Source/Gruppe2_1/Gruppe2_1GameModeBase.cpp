@@ -7,6 +7,7 @@
 #include "TimerManager.h"
 #include "MySpawnpoint.h"
 #include "MyEnemy.h"
+#include "Engine.h"
 
 AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
 {
@@ -16,9 +17,10 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
 	bUnlimitedWaves = false;
 	bTimerNotDone = true;
 
-	SpawnRate = 1.f;
+	SpawnRate = 1.50f;
 	SpawnTimer = 60.f;
 	NumberOfSpawnpoints = 0;
+	SpawningModifier = 0.98f;
 
 	WaveNumber = 1;
 	MaxWaveNumber = 3;
@@ -39,13 +41,14 @@ void AGruppe2_1GameModeBase::BeginPlay()
 	{
 		MaxWaveNumber = WaveNumber;
 	}
+	UE_LOG(LogTemp, Warning, TEXT("Spawnrate is in BeginPlay: %d"), SpawnRate)
 }
 
 void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	SpawnEnemiesTimeBased();
+	SpawnEnemies();
 	
 	TimerRemaining = GetWorld()->GetTimerManager().GetTimerRemaining(TimerHandle_SetTimerDone);
 
@@ -59,19 +62,23 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 {
 	if (bCanSpawnEnemies == true)
 	{
-		if (WaveNumber <= MaxWaveNumber)
-		{
-			MaxNumberOfEnemiesThisWave = 10 * WaveNumber * 1.2;
-			if (NumberOfEnemiesSpawnedThisWave < MaxNumberOfEnemiesThisWave)
-			{
+		//if (WaveNumber <= MaxWaveNumber)
+		//{
+		//	MaxNumberOfEnemiesThisWave = 10 * WaveNumber * 1.2;
+		//	if (NumberOfEnemiesSpawnedThisWave < MaxNumberOfEnemiesThisWave)
+		//	{
+		//	}
+		//}
 				int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
 				Spawnpoints[random]->SpawnEnemy();
+				FString TheFloatStr = FString::SanitizeFloat(SpawnRate);
+				GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *TheFloatStr);
 				bCanSpawnEnemies = false;
 				GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
-			}
-		}
+				SpawnRate = SpawnRate * SpawningModifier;
+
 	}
-	CheckIfNewWave();
+	//CheckIfNewWave();
 }
 
 void AGruppe2_1GameModeBase::SpawnEnemiesTimeBased()

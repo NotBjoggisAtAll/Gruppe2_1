@@ -89,6 +89,7 @@ protected:
 	float SpawnRate;
 	float SpawnTimer;
 	float TimerRemaining;
+	float SpawningModifier;
 
 	int NumberOfSpawnpoints;
 	int WaveNumber;
