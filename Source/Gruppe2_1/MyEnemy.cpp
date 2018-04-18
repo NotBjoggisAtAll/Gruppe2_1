@@ -26,6 +26,7 @@ AMyEnemy::AMyEnemy()
 void AMyEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	PSC->Activate();
 }
 
 // Called every frame
