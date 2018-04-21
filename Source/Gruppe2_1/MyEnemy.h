@@ -32,8 +32,9 @@ protected:
 
 	virtual void Destroyed() override;
 
-	
+	UPROPERTY(BlueprintReadOnly)
 	bool GotHit;
+
 	int GetParticles;
 	float Strength;
 };

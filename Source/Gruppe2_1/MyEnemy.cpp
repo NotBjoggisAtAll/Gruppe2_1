@@ -68,5 +68,4 @@ void AMyEnemy::GetDestroyed()
 	GotHit = true;
 	PSC->Deactivate();
 	SetActorEnableCollision(false);
-	GetMesh()->SetHiddenInGame(true);
 }
