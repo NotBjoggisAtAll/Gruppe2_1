@@ -20,7 +20,7 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
 	SpawnRate = 1.50f;
 	SpawnTimer = 60.f;
 	NumberOfSpawnpoints = 0;
-	SpawningModifier = 0.98f;
+	SpawningModifier = 0.985f;
 
 	WaveNumber = 1;
 	MaxWaveNumber = 3;
@@ -75,7 +75,16 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 				GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *TheFloatStr);
 				bCanSpawnEnemies = false;
 				GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
-				SpawnRate = SpawnRate * SpawningModifier;
+				if (SpawnRate < 0.8f)
+				{
+					SpawnRate = 0.8f;
+				}
+				else
+				{
+					SpawnRate = SpawnRate * SpawningModifier;
+				}
+
+				
 
 	}
 	//CheckIfNewWave();
