@@ -5,10 +5,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "MyCharacter.h"
+#include "Gruppe2_1GameModeBase.h"
 
 AMyTriggerVolume::AMyTriggerVolume()
 {
 	OnActorBeginOverlap.AddDynamic(this, &AMyTriggerVolume::OnOverlapBegin);
+
 }
 
 void AMyTriggerVolume::BeginPlay()
@@ -23,10 +25,12 @@ void AMyTriggerVolume::OnOverlapBegin(AActor * OverlappedActor, AActor * OtherAc
 {
 	if (OtherActor && (OtherActor != this)) {
 		auto Player = Cast<AMyCharacter>(OtherActor);
+		AGruppe2_1GameModeBase* GameMode = Cast<AGruppe2_1GameModeBase>(GetWorld()->GetAuthGameMode());
 		if (Player)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Overlap Begin!"));
-			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/Level_2"), TRAVEL_Absolute);
+			if (GameMode->GetNextLevel() == true) {
+				UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/testLevel02"), TRAVEL_Absolute);
+			}
 		}
 	}
 }

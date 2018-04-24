@@ -62,32 +62,27 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 {
 	if (bCanSpawnEnemies == true)
 	{
-		//if (WaveNumber <= MaxWaveNumber)
-		//{
-		//	MaxNumberOfEnemiesThisWave = 10 * WaveNumber * 1.2;
-		//	if (NumberOfEnemiesSpawnedThisWave < MaxNumberOfEnemiesThisWave)
-		//	{
-		//	}
-		//}
-				int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
-				Spawnpoints[random]->SpawnEnemy();
-				FString TheFloatStr = FString::SanitizeFloat(SpawnRate);
-				GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *TheFloatStr);
-				bCanSpawnEnemies = false;
-				GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
-				if (SpawnRate < 0.8f)
-				{
-					SpawnRate = 0.8f;
-				}
-				else
-				{
-					SpawnRate = SpawnRate * SpawningModifier;
-				}
-
-				
-
+		if (NumberOfEnemiesKilled < 50) {
+			int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
+			Spawnpoints[random]->SpawnEnemy();
+			FString TheFloatStr = FString::SanitizeFloat(SpawnRate);
+			//GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *TheFloatStr);
+			bCanSpawnEnemies = false;
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
+			if (SpawnRate < 0.8f)
+			{
+				SpawnRate = 0.8f;
+			}
+			else
+			{
+				SpawnRate = SpawnRate * SpawningModifier;
+			}
+		}
+		else 
+		{
+			bNextLevel = true;
+		}
 	}
-	//CheckIfNewWave();
 }
 
 void AGruppe2_1GameModeBase::SpawnEnemiesTimeBased()

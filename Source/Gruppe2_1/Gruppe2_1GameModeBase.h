@@ -29,6 +29,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Timer")
 	float GetSpawnTimer() const { return SpawnTimer; }
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Level")
+	bool GetNextLevel() const { return bNextLevel; }
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
 	bool GetUnlimitedWaves() const { return bUnlimitedWaves; }
@@ -85,6 +87,7 @@ protected:
 	bool bCanSpawnEnemies;
 	bool bUnlimitedWaves;
 	bool bTimerNotDone;
+	bool bNextLevel;
 
 	float SpawnRate;
 	float SpawnTimer;
