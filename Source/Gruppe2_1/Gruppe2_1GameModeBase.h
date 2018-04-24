@@ -22,38 +22,15 @@ public:
 	void IncrementNumberOfEnemiesKilled() { NumberOfEnemiesKilled++; }
 	
 	//Getters
-	
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Timer")
-	float GetTimerRemaining() const { return TimerRemaining; }
-
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Timer")
-	float GetSpawnTimer() const { return SpawnTimer; }
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Level")
 	bool GetNextLevel() const { return bNextLevel; }
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
-	bool GetUnlimitedWaves() const { return bUnlimitedWaves; }
-	
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
-	int GetWaveNumber() const { return WaveNumber; }
-
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Wave")
-	int GetMaxWaveNumber() const { return MaxWaveNumber; }
-
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
 	int GetNumberOfEnemies() const { return NumberOfEnemies; }
-
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
-	int GetMaxNumberOfEnemies() const { return MaxNumberOfEnemiesThisWave; }
 	
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Enemy")
 	int GetNumberOfEnemiesKilled() { return NumberOfEnemiesKilled; }
-
-	//Setters
-
-	UFUNCTION(BlueprintCallable, Category = "Wave")
-	void SetUnlimitedWaves(bool UnlimitedWaves) { bUnlimitedWaves = UnlimitedWaves; }
 
 protected:
 
@@ -63,10 +40,6 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 	void SpawnEnemies();
-
-	void SpawnEnemiesTimeBased();
-
-	void CheckIfNewWave();
 	
 	int FindAllEnemies();
 
@@ -75,13 +48,8 @@ protected:
 	//Timers
 
 	FTimerHandle TimerHandle_ResetCanSpawnEnemy;
-
-	FTimerHandle TimerHandle_SetTimerDone;
-
 	void ResetCanSpawnEnemy();
 
-	void SetTimerDone();
-	
 	//Variables
 
 	bool bCanSpawnEnemies;
@@ -95,11 +63,8 @@ protected:
 	float SpawningModifier;
 
 	int NumberOfSpawnpoints;
-	int WaveNumber;
-	int MaxWaveNumber;
 	int NumberOfEnemies;
-	int NumberOfEnemiesSpawnedThisWave;
-	int MaxNumberOfEnemiesThisWave;
+	int NumberOfEnemiesSpawned;
 	int NumberOfEnemiesKilled;
 	
 	TArray<AMyEnemy*> Enemies;
