@@ -45,7 +45,7 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 {
 	if (bCanSpawnEnemies == true)
 	{
-		if (NumberOfEnemiesKilled < 50) {
+		if (NumberOfEnemiesKilled < 5) {
 			int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
 			Spawnpoints[random]->SpawnEnemy();
 			FString TheFloatStr = FString::SanitizeFloat(SpawnRate);

@@ -53,7 +53,6 @@ protected:
 	//Variables
 
 	bool bCanSpawnEnemies;
-	bool bUnlimitedWaves;
 	bool bTimerNotDone;
 	bool bNextLevel;
 
