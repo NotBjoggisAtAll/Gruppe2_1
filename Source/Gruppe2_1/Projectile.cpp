@@ -43,7 +43,6 @@ AProjectile::AProjectile()
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	float xRotation = 250.f * DeltaTime;
 	FRotator ProjectileRotation = FRotator(0.f, 0.f, xRotation);
 	AddActorLocalRotation(ProjectileRotation);

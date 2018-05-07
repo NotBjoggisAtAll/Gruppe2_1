@@ -22,6 +22,7 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
 	NumberOfEnemies = 0;
 	NumberOfEnemiesSpawned = 0;
 	NumberOfEnemiesKilled = 0;
+	NumberOfKillsNeeded = 5;
 }
 
 void AGruppe2_1GameModeBase::BeginPlay()
@@ -29,7 +30,7 @@ void AGruppe2_1GameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	NumberOfSpawnpoints = FindAllSpawnpoints();
-	
+
 }
 
 void AGruppe2_1GameModeBase::Tick(float DeltaTime)
@@ -43,29 +44,39 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 
 void AGruppe2_1GameModeBase::SpawnEnemies()
 {
-	if (bCanSpawnEnemies == true)
-	{
-		if (NumberOfEnemiesKilled < 5) {
+	if (bCanSpawnEnemies == true) {
+		if (CheckIfNextLevel() == false)
+		{
 			int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
 			Spawnpoints[random]->SpawnEnemy();
-			FString TheFloatStr = FString::SanitizeFloat(SpawnRate);
-			//GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *TheFloatStr);
+
 			bCanSpawnEnemies = false;
 			GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
-			if (SpawnRate < 0.8f)
-			{
-				SpawnRate = 0.8f;
-			}
-			else
-			{
-				SpawnRate = SpawnRate * SpawningModifier;
-			}
-		}
-		else 
-		{
-			bNextLevel = true;
+			ChangeSpawnRate();
 		}
 	}
+}
+
+void AGruppe2_1GameModeBase::ChangeSpawnRate()
+{
+	if (SpawnRate < 0.8f)
+	{
+		SpawnRate = 0.8f;
+	}
+	else
+	{
+		SpawnRate = SpawnRate * SpawningModifier;
+	}
+}
+
+bool AGruppe2_1GameModeBase::CheckIfNextLevel()
+{
+	if (NumberOfEnemiesKilled >= NumberOfKillsNeeded)
+	{
+		bNextLevel = true;
+		return true;
+	}
+	return false;
 }
 
 int AGruppe2_1GameModeBase::FindAllEnemies()
@@ -92,7 +103,7 @@ int AGruppe2_1GameModeBase::FindAllSpawnpoints()
 	return temp;
 }
 
-void AGruppe2_1GameModeBase::ResetCanSpawnEnemy() 
+void AGruppe2_1GameModeBase::ResetCanSpawnEnemy()
 {
 	bCanSpawnEnemies = true;
 	NumberOfEnemiesSpawned++;

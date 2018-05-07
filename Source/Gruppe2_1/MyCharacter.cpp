@@ -1,5 +1,6 @@
 // Sjekk hvilke includes jeg faktisk bruker
 #include "MyCharacter.h"
+#include "MyPlayerController.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -52,14 +53,13 @@ void AMyCharacter::BeginPlay()
 
 void AMyCharacter::Tick(float DeltaTime)
 {
-	UWorld* World = GetWorld();
 	Super::Tick(DeltaTime);
 
 	if (bIsShooting == true)
 	{
 		Shooting();
 	}
-		FireRateRemaining = World->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
+		FireRateRemaining = GetWorld()->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
 }
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -133,7 +133,7 @@ void AMyCharacter::StartShooting()
 // Runs when you release the Shoot button
 void AMyCharacter::StopShooting()
 {
-	bIsShooting = false;
+	bIsShooting = false;	
 }
 
 // Runs while you hold the Shoot button

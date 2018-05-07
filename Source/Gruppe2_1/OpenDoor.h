@@ -36,7 +36,5 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		bool bDoorOpen;
-
-	AActor* Owner = nullptr; // Owning door
 	
 };

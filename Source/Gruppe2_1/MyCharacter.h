@@ -52,6 +52,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FireRate")
 		bool GetCanFire() const { return bCanFire; }
 
+	//Setter
+	UFUNCTION(BlueprintCallable, Category = "Health")
+		void SetCanGetHurt(bool bInput) { bCanGetHurt = bInput; }
+
 protected:
 
 	virtual void BeginPlay() override;

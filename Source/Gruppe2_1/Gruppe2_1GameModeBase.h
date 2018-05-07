@@ -43,6 +43,10 @@ protected:
 	
 	int FindAllEnemies();
 
+	bool CheckIfNextLevel();
+
+	void ChangeSpawnRate();
+
 	int FindAllSpawnpoints();
 
 	//Timers
@@ -65,6 +69,7 @@ protected:
 	int NumberOfEnemies;
 	int NumberOfEnemiesSpawned;
 	int NumberOfEnemiesKilled;
+	int NumberOfKillsNeeded;
 	
 	TArray<AMyEnemy*> Enemies;
 	TArray<AMySpawnpoint*> Spawnpoints;
