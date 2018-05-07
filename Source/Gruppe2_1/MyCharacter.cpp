@@ -4,7 +4,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
-#include "Engine/World.h"
+#include "Engine/Engine.h"
 #include "TimerManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
@@ -106,14 +106,10 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyCharacter::MoveForward(float Value)
 {
-	const UWorld* World = GetWorld();
-	FVector SpawnLocation = GetActorLocation();
 	if (Value != 0.f)
 	{
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
 		AddMovementInput(Forward, Value);
-		// TODO FIX SOUND
-		//UGameplayStatics::PlaySoundAtLocation(World, Walk, SpawnLocation);
 	}
 }
 
@@ -128,19 +124,23 @@ void AMyCharacter::MoveRight(float Value) {
 void AMyCharacter::StartShooting()
 {
 	bIsShooting = true;
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Red, TEXT("0.0 Shooting: isShooting set to true"));
 }
 
 // Runs when you release the Shoot button
 void AMyCharacter::StopShooting()
 {
 	bIsShooting = false;	
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Red, TEXT("0.1 Shooting: isShooting set to false"));
 }
 
 // Runs while you hold the Shoot button
 void AMyCharacter::Shooting()
 {
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Red, TEXT("1.0 Shooting: Entered function"));
 	if (bCanFire == true)
 	{
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Red, TEXT("1.1 Shooting: Can Fire"));
 		const FVector FireDirection = GetActorForwardVector();
 		const FRotator FireRotation = FireDirection.Rotation();
 		const FVector SpawnLocation = GetActorLocation() + FireRotation.RotateVector(GunOffset);
@@ -149,8 +149,10 @@ void AMyCharacter::Shooting()
 		{
 			World->SpawnActor<AProjectile>(Projectile_BP, SpawnLocation, FireRotation);
 			UGameplayStatics::PlaySoundAtLocation(World, FireShot, GetActorLocation());
+			GEngine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Red, TEXT("1.2 Shooting: Found World, and spawing projectile."));
 		}
 		bCanFire = false;
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Red, TEXT("1.3 Shooting: Setting Can Fire to false"));
 		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
 	}
 }
@@ -158,6 +160,7 @@ void AMyCharacter::Shooting()
 void AMyCharacter::ShotTimerExpired()
 {
 	bCanFire = true;
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 10.f, FColor::Red, TEXT("2.0 Shooting: Entered ResetShot function adn sets Can Fire to true"));
 }
 
 void AMyCharacter::ResetCanGetHurt()
