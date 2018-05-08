@@ -35,6 +35,15 @@ public:
 	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
 		USoundBase* Walk;
 
+	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
+		USoundBase* HealthPickupSound;
+
+	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
+		USoundBase* FireRatePickupSound;
+
+	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
+		USoundBase* FireRateDropSound;
+
 	//Getters
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Health")
