@@ -20,6 +20,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
 	void IncrementNumberOfEnemiesKilled() { NumberOfEnemiesKilled++; }
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Level")
+	bool CheckIfNextLevel();
 	
 	//Getters
 
@@ -42,8 +45,6 @@ protected:
 	void SpawnEnemies();
 	
 	int FindAllEnemies();
-
-	bool CheckIfNextLevel();
 
 	void ChangeSpawnRate();
 
