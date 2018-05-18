@@ -42,6 +42,7 @@ AMyCharacter::AMyCharacter()
 	FireRate = 1.f;
 	bCanFire = true;
 	bCanGetHurt = true;
+	bFireRatePickedUp = false;
 	bFireRateOn = false;
 }
 
@@ -86,10 +87,9 @@ void AMyCharacter::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor *
 	{
 			UWorld* World = GetWorld();
 			FireRate = 0.1f;
-			bFireRateOn = true;
+			bFireRatePickedUp = true;
 			float PitchSound = FMath::FRandRange(0.8f, 1.2f);
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireRatePickupSound, GetActorLocation(), 1.f, PitchSound);
-			World->GetTimerManager().SetTimer(TimerHandle_ResetToNormalFireRate, this, &AMyCharacter::ResetToNormalFireRate, 2.f); //TODO Lag en variabel istedenfor hardkodet verdi.
 			OtherActor->Destroy();
 	}
 }
@@ -149,6 +149,11 @@ void AMyCharacter::Shooting()
 			UGameplayStatics::PlaySoundAtLocation(World, FireShot, GetActorLocation());
 		}
 		bCanFire = false;
+		if (bFireRatePickedUp == true) {
+			bFireRatePickedUp = false;
+			bFireRateOn = true;
+			World->GetTimerManager().SetTimer(TimerHandle_ResetToNormalFireRate, this, &AMyCharacter::ResetToNormalFireRate, 2.f); //TODO Lag en variabel istedenfor hardkodet verdi.
+		}
 		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
 	}
 }

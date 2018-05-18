@@ -99,6 +99,7 @@ protected:
 	bool bCanGetHurt;
 	bool bIsShooting;
 	bool bCanFire;
+	bool bFireRatePickedUp;
 	bool bFireRateOn;
 
 	float Health;
