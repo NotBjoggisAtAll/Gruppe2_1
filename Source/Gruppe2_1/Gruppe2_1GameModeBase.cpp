@@ -44,15 +44,19 @@ void AGruppe2_1GameModeBase::Tick(float DeltaTime)
 
 void AGruppe2_1GameModeBase::SpawnEnemies()
 {
-	if (bCanSpawnEnemies == true) {
-		if (CheckIfNextLevel() == false)
+	if (NumberOfSpawnpoints > 0)
+	{
+		if (bCanSpawnEnemies == true)
 		{
-			int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
-			Spawnpoints[random]->SpawnEnemy();
+			if (CheckIfNextLevel() == false)
+			{
+				int random = FMath::RandRange(0, NumberOfSpawnpoints - 1);
+				Spawnpoints[random]->SpawnEnemy();
 
-			bCanSpawnEnemies = false;
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
-			ChangeSpawnRate();
+				bCanSpawnEnemies = false;
+				GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
+				ChangeSpawnRate();
+			}
 		}
 	}
 }
@@ -97,8 +101,11 @@ int AGruppe2_1GameModeBase::FindAllSpawnpoints()
 	for (TActorIterator<AMySpawnpoint> It(GetWorld(), AMySpawnpoint::StaticClass()); It; ++It)
 	{
 		AMySpawnpoint* Spawnpoint = Cast<AMySpawnpoint>(*It);
-		Spawnpoints.Add(Spawnpoint);
-		temp++;
+		if (Spawnpoint != nullptr)
+		{
+			Spawnpoints.Add(Spawnpoint);
+			temp++;
+		}
 	}
 	return temp;
 }
