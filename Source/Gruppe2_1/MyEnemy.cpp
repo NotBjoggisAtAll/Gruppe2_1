@@ -9,10 +9,8 @@
 #include "Projectile.h"
 #include "MyCharacter.h"
 
-// Sets default values
 AMyEnemy::AMyEnemy()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Strength = 1.f;
 
@@ -22,18 +20,16 @@ AMyEnemy::AMyEnemy()
 
 }
 
-// Called when the game starts or when spawned
 void AMyEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	PSC->Activate();
 }
 
-// Called every frame
 void AMyEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GotHit == true)
+	if (bGotHit == true)
 	{
 		GetParticles = PSC->GetNumActiveParticles();
 		if (GetParticles == 0)
@@ -43,12 +39,13 @@ void AMyEnemy::Tick(float DeltaTime)
 	}
 }
 
-// Called to bind functionality to input
 void AMyEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
-void AMyEnemy::Destroyed() {
+
+void AMyEnemy::Destroyed()
+{
 
 	Super::Destroyed();
 
@@ -65,7 +62,7 @@ void AMyEnemy::Destroyed() {
 }
 void AMyEnemy::GetDestroyed()
 {
-	GotHit = true;
+	bGotHit = true;
 	PSC->Deactivate();
 	SetActorEnableCollision(false);
 }

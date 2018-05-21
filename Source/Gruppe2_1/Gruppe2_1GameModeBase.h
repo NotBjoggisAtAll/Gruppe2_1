@@ -52,8 +52,8 @@ protected:
 
 	//Timers
 
-	FTimerHandle TimerHandle_ResetCanSpawnEnemy;
-	void ResetCanSpawnEnemy();
+	FTimerHandle TimerHandle_ResetCanSpawnEnemies;
+	void ResetCanSpawnEnemies();
 
 	//Variables
 

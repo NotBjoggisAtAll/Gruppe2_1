@@ -30,7 +30,6 @@ void AGruppe2_1GameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	NumberOfSpawnpoints = FindAllSpawnpoints();
-
 }
 
 void AGruppe2_1GameModeBase::Tick(float DeltaTime)
@@ -54,7 +53,7 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 				Spawnpoints[random]->SpawnEnemy();
 
 				bCanSpawnEnemies = false;
-				GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemy, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemy, SpawnRate);
+				GetWorld()->GetTimerManager().SetTimer(TimerHandle_ResetCanSpawnEnemies, this, &AGruppe2_1GameModeBase::ResetCanSpawnEnemies, SpawnRate);
 				ChangeSpawnRate();
 			}
 		}
@@ -113,7 +112,7 @@ int AGruppe2_1GameModeBase::FindAllSpawnpoints()
 	return temp;
 }
 
-void AGruppe2_1GameModeBase::ResetCanSpawnEnemy()
+void AGruppe2_1GameModeBase::ResetCanSpawnEnemies()
 {
 	bCanSpawnEnemies = true;
 	NumberOfEnemiesSpawned++;

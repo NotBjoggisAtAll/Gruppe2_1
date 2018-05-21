@@ -15,8 +15,6 @@ public:
 		AMyTriggerVolume();
 
 protected:
-	virtual void BeginPlay() override;
-
 	UFUNCTION()
 	void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 };

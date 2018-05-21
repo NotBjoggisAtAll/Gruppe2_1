@@ -15,7 +15,6 @@
 
 AMyCharacter::AMyCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bUseControllerRotationPitch = false;
@@ -60,7 +59,7 @@ void AMyCharacter::Tick(float DeltaTime)
 	{
 		Shooting();
 	}
-		FireRateRemaining = GetWorld()->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
+	FireRateRemaining = GetWorld()->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
 }
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -72,7 +71,7 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEv
 		Health -= DamageAmount;
 		bCanGetHurt = false;
 		World->GetTimerManager().SetTimer(TimerHandle_ResetCanGetHurt, this, &AMyCharacter::ResetCanGetHurt, 2.f); //TODO Lag en variabel istedenfor hardkodet verdi.
-	if (Health > 10)
+		if (Health > 10)
 		{
 			Health = 10.f;
 		}
@@ -85,12 +84,12 @@ void AMyCharacter::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor *
 	auto FireRateUp = Cast<AMyFireRateUp>(OtherActor);
 	if (FireRateUp)
 	{
-			UWorld* World = GetWorld();
-			FireRate = 0.1f;
-			bFireRatePickedUp = true;
-			float PitchSound = FMath::FRandRange(0.8f, 1.2f);
-			UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireRatePickupSound, GetActorLocation(), 1.f, PitchSound);
-			OtherActor->Destroy();
+		UWorld* World = GetWorld();
+		FireRate = 0.1f;
+		bFireRatePickedUp = true;
+		float PitchSound = FMath::FRandRange(0.8f, 1.2f);
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireRatePickupSound, GetActorLocation(), 1.f, PitchSound);
+		OtherActor->Destroy();
 	}
 }
 
@@ -98,7 +97,6 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	check(PlayerInputComponent);
 
-	//Set up key bindings
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
 	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &AMyCharacter::StartShooting);
@@ -131,7 +129,7 @@ void AMyCharacter::StartShooting()
 // Runs when you release the Shoot button
 void AMyCharacter::StopShooting()
 {
-	bIsShooting = false;	
+	bIsShooting = false;
 }
 
 // Runs while you hold the Shoot button

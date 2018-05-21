@@ -6,6 +6,8 @@
 #include "MyEnemy.h"
 #include "Enemy_1.generated.h"
 
+// Enemy 1 er "Spider"
+
 UCLASS()
 class GRUPPE2_1_API AEnemy_1 : public AMyEnemy
 {
@@ -15,8 +17,6 @@ public:
 	AEnemy_1();
 
 protected:
-
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UFUNCTION()

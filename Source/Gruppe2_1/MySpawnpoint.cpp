@@ -11,7 +11,8 @@ AMySpawnpoint::AMySpawnpoint()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void AMySpawnpoint::SpawnEnemy() {
+void AMySpawnpoint::SpawnEnemy()
+{
 	UWorld* const World = GetWorld();
 	
 	const FRotator SpawnRotation = FRotator(0.f, 180.f, 0.f);
@@ -19,21 +20,25 @@ void AMySpawnpoint::SpawnEnemy() {
 
 	int RandomEnemy = FMath::RandRange(1, 3);
 	
-	if (World != NULL) {
+	if (World != NULL)
+	{
 		switch (RandomEnemy)
 		{
 		case 1:
-			if (Enemy_1 != nullptr) {
+			if (Enemy_1 != nullptr)
+			{
 				World->SpawnActor<AMyEnemy>(Enemy_1, SpawnLocation, SpawnRotation);
 			}
 			break;
 		case 2:
-			if (Enemy_2 != nullptr) {
+			if (Enemy_2 != nullptr)
+			{
 				World->SpawnActor<AMyEnemy>(Enemy_2, SpawnLocation, SpawnRotation);
 			}
 			break;
 		case 3:
-			if (Enemy_3 != nullptr) {
+			if (Enemy_3 != nullptr)
+			{
 				World->SpawnActor<AMyEnemy>(Enemy_3, SpawnLocation, SpawnRotation);
 			}
 			break;

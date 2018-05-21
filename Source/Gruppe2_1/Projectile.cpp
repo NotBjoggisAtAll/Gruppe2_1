@@ -11,14 +11,12 @@
 #include "MyHealthUp.h"
 #include "MyFireRateUp.h"
 
-// Sets default values
 AProjectile::AProjectile()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	Speed = 750.f;
 
-	// Static reference to the mesh to use for the projectile
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> ProjectileMeshAsset(TEXT("/Game/Meshes/Player/Projectile_Mesh.Projectile_Mesh"));
 
 	// Create mesh component for the projectile sphere
@@ -37,7 +35,7 @@ AProjectile::AProjectile()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = false;
 	ProjectileMovement->ProjectileGravityScale = 0.f; // No gravity
-						 
+
 	InitialLifeSpan = 3.0f; // Die after 3 seconds by default
 }
 void AProjectile::Tick(float DeltaTime)
@@ -59,7 +57,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 			EnemyHit = true;
 			Enemy->GetDestroyed();
 			int RandomNumber = FMath::RandRange(1, 10);
-			if(RandomNumber > 7)
+			if (RandomNumber > 7)
 			{
 				if (RandomNumber == 10)
 				{

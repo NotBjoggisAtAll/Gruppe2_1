@@ -4,10 +4,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "MyCharacter.h"
 
-// Sets default values
 AEnemy_3_Projectile::AEnemy_3_Projectile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	EnemyProjectileComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
@@ -16,7 +14,6 @@ AEnemy_3_Projectile::AEnemy_3_Projectile()
 	Strength = 2.f;
 }
 
-// Called when the game starts or when spawned
 void AEnemy_3_Projectile::BeginPlay()
 {
 	Super::BeginPlay();
@@ -32,10 +29,4 @@ void AEnemy_3_Projectile::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, A
 		UGameplayStatics::ApplyPointDamage(OtherActor, Strength, GetActorForwardVector(), HitResult, UGameplayStatics::GetPlayerController(GetWorld(), 0), this, UDamageType::StaticClass());
 		Destroy();
 	}
-}
-
-// Called every frame
-void AEnemy_3_Projectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }

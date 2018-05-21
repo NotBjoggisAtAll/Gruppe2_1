@@ -13,12 +13,12 @@ UCLASS()
 class GRUPPE2_1_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
-		
-	UPROPERTY(Category = Camera, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* CameraComponent;
 
 	UPROPERTY(Category = Camera, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
+		class UCameraComponent* CameraComponent;
+
+	UPROPERTY(Category = Camera, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		class USpringArmComponent* CameraBoom;
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<AProjectile> Projectile_BP;
@@ -68,11 +68,13 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
+
 	virtual void Tick(float DeltaTime) override;
+
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
 	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	//Input functions
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -86,10 +88,10 @@ protected:
 	void Shooting();
 
 	//Timerhandles and function related to them
-	FTimerHandle TimerHandle_ShotTimerExpired;	
+	FTimerHandle TimerHandle_ShotTimerExpired;
 	FTimerHandle TimerHandle_ResetCanGetHurt;
 	FTimerHandle TimerHandle_ResetToNormalFireRate;
-	
+
 	void ShotTimerExpired();
 	void ResetCanGetHurt();
 	void ResetToNormalFireRate();
@@ -105,6 +107,6 @@ protected:
 	float Health;
 	float FireRate;
 	float FireRateRemaining;
-	
+
 	FVector GunOffset;
 };
