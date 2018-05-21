@@ -15,7 +15,7 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
 
 	bCanSpawnEnemies = true;
 
-	SpawnRate = 1.50f;
+	SpawnRate = 2.f;
 	NumberOfSpawnpoints = 0;
 	SpawningModifier = 0.985f;
 
@@ -63,14 +63,17 @@ void AGruppe2_1GameModeBase::SpawnEnemies()
 
 void AGruppe2_1GameModeBase::ChangeSpawnRate()
 {
-	if (SpawnRate < 0.8f)
+	if (SpawnRate < 1.f)
 	{
-		SpawnRate = 0.8f;
+		SpawnRate = 1.f;
 	}
 	else
 	{
 		SpawnRate = SpawnRate * SpawningModifier;
 	}
+	FString TheFloatStr = FString::SanitizeFloat(SpawnRate);
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *TheFloatStr);
 }
 
 bool AGruppe2_1GameModeBase::CheckIfNextLevel()
