@@ -14,6 +14,13 @@ AMyPowerUp::AMyPowerUp()
 	RootComponent = OverlapCollision;
 	PowerUp->SetupAttachment(RootComponent);
 }
+void AMyPowerUp::BeginPlay()
+{
+	Super::BeginPlay();
+
+	FVector NewLocation = FVector(GetActorLocation().X, GetActorLocation().Y, 110.f);
+	SetActorLocation(NewLocation);
+}
 
 void AMyPowerUp::Tick(float DeltaTime)
 {
@@ -21,7 +28,6 @@ void AMyPowerUp::Tick(float DeltaTime)
 
 	float yRotation = 100.f * DeltaTime;
 	FRotator Rotation = FRotator(0.f, yRotation, 0.f);
-	
 	AddActorLocalRotation(Rotation);
 }
 
