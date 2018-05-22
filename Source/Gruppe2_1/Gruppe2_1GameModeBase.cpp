@@ -70,9 +70,6 @@ void AGruppe2_1GameModeBase::ChangeSpawnRate()
 	{
 		SpawnRate = SpawnRate * SpawningModifier;
 	}
-	FString TheFloatStr = FString::SanitizeFloat(SpawnRate);
-
-	GEngine->AddOnScreenDebugMessage(-1, 1.0, FColor::Red, *TheFloatStr);
 }
 
 bool AGruppe2_1GameModeBase::CheckIfNextLevel()
