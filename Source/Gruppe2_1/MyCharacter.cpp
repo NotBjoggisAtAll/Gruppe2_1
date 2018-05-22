@@ -62,10 +62,6 @@ void AMyCharacter::Tick(float DeltaTime)
 		Shooting();
 	}
 	FireRateRemaining = GetWorld()->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
-	if (Health <= 0)
-	{
-		GetCharacterMovement()->DisableMovement();
-	}
 }
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -116,7 +112,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyCharacter::MoveForward(float Value)
 {
-	if (Value != 0.f)
+	if (Value != 0.f && Health > 0)
 	{
 		FVector Forward = FVector(-1.f, 1.f, 0.f);
 		AddMovementInput(Forward, Value);
@@ -124,7 +120,7 @@ void AMyCharacter::MoveForward(float Value)
 }
 
 void AMyCharacter::MoveRight(float Value) {
-	if (Value != 0.f) {
+	if (Value != 0.f && Health > 0) {
 		FVector Right = FVector(-1.f, -1.f, 0.f);
 		AddMovementInput(Right, Value);
 	}

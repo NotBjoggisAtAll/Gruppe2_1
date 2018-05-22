@@ -22,7 +22,7 @@ AGruppe2_1GameModeBase::AGruppe2_1GameModeBase()
 	NumberOfEnemies = 0;
 	NumberOfEnemiesSpawned = 0;
 	NumberOfEnemiesKilled = 0;
-	NumberOfKillsNeeded = 50;
+	NumberOfKillsNeeded = 5;
 }
 
 void AGruppe2_1GameModeBase::BeginPlay()
