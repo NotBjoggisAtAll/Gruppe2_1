@@ -36,6 +36,9 @@ public:
 		USoundBase* Walk;
 
 	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
+		USoundBase* GetHurtSound;
+
+	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
 		USoundBase* HealthPickupSound;
 
 	UPROPERTY(Category = "Audio", EditAnywhere, BlueprintReadWrite)
@@ -105,7 +108,9 @@ protected:
 	bool bFireRateOn;
 
 	float Health;
+	float CanGetHurtAgainTimer;
 	float FireRate;
+	float FireRateDuration;
 	float FireRateRemaining;
 
 	FVector GunOffset;

@@ -36,9 +36,11 @@ AMyCharacter::AMyCharacter()
 
 	// Sets default values to variables
 	Health = 10.f;
+	FireRate = 1.f;
+	FireRateDuration = 2.f;
+	CanGetHurtAgainTimer = 2.f;
 
 	GunOffset = FVector(100.f, 0.f, 0.f);
-	FireRate = 1.f;
 	bCanFire = true;
 	bCanGetHurt = true;
 	bFireRatePickedUp = false;
@@ -60,6 +62,10 @@ void AMyCharacter::Tick(float DeltaTime)
 		Shooting();
 	}
 	FireRateRemaining = GetWorld()->GetTimerManager().GetTimerElapsed(TimerHandle_ShotTimerExpired);
+	if (Health <= 0)
+	{
+		GetCharacterMovement()->DisableMovement();
+	}
 }
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
@@ -69,8 +75,12 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEv
 	{
 		UWorld* World = GetWorld();
 		Health -= DamageAmount;
+		if (DamageAmount > 0)
+		{
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), GetHurtSound, GetActorLocation());
+		}
 		bCanGetHurt = false;
-		World->GetTimerManager().SetTimer(TimerHandle_ResetCanGetHurt, this, &AMyCharacter::ResetCanGetHurt, 2.f); //TODO Lag en variabel istedenfor hardkodet verdi.
+		World->GetTimerManager().SetTimer(TimerHandle_ResetCanGetHurt, this, &AMyCharacter::ResetCanGetHurt, CanGetHurtAgainTimer);
 		if (Health > 10)
 		{
 			Health = 10.f;
@@ -150,7 +160,7 @@ void AMyCharacter::Shooting()
 		if (bFireRatePickedUp == true) {
 			bFireRatePickedUp = false;
 			bFireRateOn = true;
-			World->GetTimerManager().SetTimer(TimerHandle_ResetToNormalFireRate, this, &AMyCharacter::ResetToNormalFireRate, 2.f); //TODO Lag en variabel istedenfor hardkodet verdi.
+			World->GetTimerManager().SetTimer(TimerHandle_ResetToNormalFireRate, this, &AMyCharacter::ResetToNormalFireRate, FireRateDuration);
 		}
 		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AMyCharacter::ShotTimerExpired, FireRate);
 	}
