@@ -24,7 +24,7 @@ void AMyTriggerVolume::OnOverlapBegin(AActor * OverlappedActor, AActor * OtherAc
 			{
 				if (GameMode->GetNextLevel() == true)
 				{
-					UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/testLevel02"), TRAVEL_Absolute);
+					UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/Level02"), TRAVEL_Absolute);
 				}
 			}
 		}
