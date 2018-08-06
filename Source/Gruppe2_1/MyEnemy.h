@@ -22,10 +22,10 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void Destroyed() override;
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	virtual void Destroyed() override;
 
 
 	UPROPERTY(Category = Particles, EditAnywhere, BlueprintReadWrite)
@@ -35,6 +35,8 @@ protected:
 	bool bGotHit;
 	
 	int GetParticles;
+
+	int EnemyID;
 	
 	float Strength;
 };

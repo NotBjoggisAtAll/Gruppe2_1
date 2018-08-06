@@ -46,20 +46,18 @@ void AMyEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyEnemy::Destroyed()
 {
-
 	Super::Destroyed();
 
-	UWorld* World = GetWorld();
-
-	if (World)
+	if (GetWorld())
 	{
-		AGruppe2_1GameModeBase* MyGameMode = Cast<AGruppe2_1GameModeBase>(World->GetAuthGameMode());
+		AGruppe2_1GameModeBase* MyGameMode = Cast<AGruppe2_1GameModeBase>(GetWorld()->GetAuthGameMode());
 		if (MyGameMode)
 		{
-			MyGameMode->IncrementNumberOfEnemiesKilled();
+			MyGameMode->IncrementNumberOfEnemiesKilled(EnemyID);
 		}
 	}
 }
+
 void AMyEnemy::GetDestroyed()
 {
 	bGotHit = true;

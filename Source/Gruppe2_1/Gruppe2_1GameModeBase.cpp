@@ -72,6 +72,25 @@ void AGruppe2_1GameModeBase::ChangeSpawnRate()
 	}
 }
 
+void AGruppe2_1GameModeBase::IncrementNumberOfEnemiesKilled(int EnemyID)
+{
+	NumberOfEnemiesKilled++;
+	switch (EnemyID)
+	{
+	case 1:
+		NumberOfSpidersKilled++;
+		break;
+	case 2:
+		NumberOfRoachesKilled++;
+		break;
+	case 3:
+		NumberOfMothsKilled++;
+		break;
+	default:
+		break;
+	}
+}
+
 bool AGruppe2_1GameModeBase::CheckIfNextLevel()
 {
 	if (NumberOfEnemiesKilled >= NumberOfKillsNeeded)

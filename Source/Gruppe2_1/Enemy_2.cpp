@@ -3,10 +3,12 @@
 #include "Enemy_2.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/CapsuleComponent.h"
+#include "Gruppe2_1GameModeBase.h"
 #include "MyCharacter.h"
 
 AEnemy_2::AEnemy_2()
 {
+	EnemyID = 2;
 	Strength = 1.f;
 }
 
@@ -25,5 +27,3 @@ void AEnemy_2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * Oth
 		UGameplayStatics::ApplyPointDamage(OtherActor, Strength, GetActorForwardVector(), HitResult, GetController(), this, UDamageType::StaticClass());
 	}
 }
-
-
